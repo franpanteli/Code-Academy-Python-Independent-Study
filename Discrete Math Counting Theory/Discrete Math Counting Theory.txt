@@ -1,0 +1,86 @@
+-> counting theory 
+	-> introduction 
+		-> fundamental counting principle <- if there are p ways to do one thing, and q ways to do another - then there are pxq ways to do both 
+
+		-> examples 
+			-> if we have three shirts and two jeans, then there are 6 ways of combining these into outfits
+			-> if we have a coin and a die, then there are 12 possible outcomes if we run both experiments at the same time 
+			-> the third example they give is different pizza types and topping option combinations 
+
+	-> rules of sum and product 
+		-> 'or' is adding the number of different possible outcomes from two events 
+			-> choosing to go to shopping or to the movies 
+			-> this is the sum rule 
+
+		-> 'and' is multiplying the number of different possible outcomes from two events 
+			-> this is the product rule 
+
+		-> applications problem 
+			-> a for loop can be written to loop through different options of combinations 
+				-> these can be printed after each iteration 
+			-> when using loops to do this, a counter can be used whose value is increased by 1 for each iteration 
+				-> nested loops can also be used for this 
+
+	-> extending counting rules 
+		-> multiple groups <- something which is raised to the power 
+			->  for example, a test with 6 questions and 4 possible answers 
+			-> 4^6 total possible combinations 
+
+		-> combined sum and product rules 
+			-> this is one where we have an 'or' and an 'and' probability rule being applied in the same context 
+			-> there are three different ways to reach one town and multiple different ways to reach another 
+			-> the different ways of getting there from the different towns 
+
+		-> Principle of Inclusion-Exclusion (PIE)
+			-> this is a statistical probability equation 
+			-> the modulus of C union H 
+			-> it's a Venn diagram equation, which says C union H is C + H minus their intersection 
+			-> in the course, this is given in an example of people who like hot drinks, cold drinks or both 
+
+		-> Pascal's triangle 
+			-> the sum of entires in each row n equals 2^n 
+			-> hockey stick pattern
+				-> this is the visual triangle pattern in Pascal's triangle 
+				-> the elements in this triangle are binomial coefficients 
+				-> this pattern gets its name because the shape formed by the diagonal and the slanting line resembles a hockey stick 
+
+     1
+    1  1
+   1  2  1
+  1  3  3  1
+ 1  4  6  4  1
+1  5  10 10  5  1
+
+				-> the slant goes from an element on one row, to the element on the next row which is slightly to the right of it 
+				-> to find the number at the end of the slant, you sum the numbers in the diagonal 
+
+		-> applications of counting theory 
+			-> bit strings <- the number of different bit strings of length n is 2^n 
+			-> valid passwords
+				-> the number of different usernames with n letters followed by one digit 
+				-> this is 52^n
+				-> 52, because this is 26*2 
+				-> 26 letters in the alphabet, and either they can be uppercase or lowercase 
+
+		-> Python application for passwords 
+			-> passwords can be generated using a series of nested loops 
+			-> in each nested loop, a different set of characters is iterated through 
+				-> lowercase letters
+				-> uppercase letters 
+				-> numbers 
+
+		-> review of counting principles 
+			-> fundamental principle <- this is the 'and' probability rule which was done through earlier 
+			-> then there is the sum rule <- this is the 'or' rule and applied for mutually exclusive events 
+			-> extended product rule <- there are m^n ways for m events with n choices each 
+			-> the inclusion-exclusion principle <- this is the Venn diagram rule that says take the elements in A and in B and then take away the section of their Venn diagram where they overlap 
+				-> the notation for this is modulus |AUB| = |A| + |B| - |AnB|
+
+		-> pigeonhole principle 
+			-> if more than n items are placed into n containers, at least one container must contain more than one of them 
+			-> if we have n containers and more than n elements, then there has to be a container which has more than one element in it 
+			-> this is the pigeonhole principle 
+			-> "pigeons" are being placed into "pigeonholes" 
+			-> so there are multiple pigeons being placed into the holes
+			-> this highlights counting principles and their applications 
+			-> these principles can be put into Python, to solve counting problems 

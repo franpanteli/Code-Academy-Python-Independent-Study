@@ -1,0 +1,100 @@
+-> limits 
+	-> the value of a function as a certain point approached
+	-> in the limit, as x tends to ..., y tends to ...
+		-> this is a one sided limit if it is done from one direction 
+		-> e.g, if a function jumps at a certain value, then you can take the limits from either side of this
+
+-> limit definition of a derivative 
+	-> change in y over change in x
+	-> speed is distance over time <- the gradients on these graphs 
+		-> average and instantaneous speeds 
+	-> calculating the differential at a point, compared to over the entire function 
+		-> the rate of change at a specific point 
+		-> the definition of a derivative, calculated with limits 
+
+-> the derivative function 
+	-> the instantaneous rate of change at a point 
+	-> intervals <- dx's 
+	-> there is a definition of a derivative, involving limits
+	-> the derivative is the slope of a tangent line at a point 
+	-> how a curvier function changes at a specific point 
+	-> the tangent <- drawing a line relative to this curve 
+
+-> the derivative of a function is another function <- in this example 
+	-> an order of magnitude less 
+	-> these tangent lines can be plotted
+	-> how a function changes at the same point x
+
+-> properties of the derivative function 
+	-> the speed is the gradient on the time-distance graph 
+	-> the derivative of a derivative can be calculated	
+	-> the rate of change of the derivative 
+		-> the function could have reached a local or global maximum 
+	-> local minima are inflection points <- curvature 
+	-> these are the largest / smallest over the entire function 
+		-> extrema 
+		-> inspecting the derivative of the derivative can tell you if you are at a local minima / maximum etc
+
+-> calculating derivatives 
+	-> how to find derivative functions <- through rules 
+	-> building blocks and combining rules 
+	-> they are linear operators 
+		-> you can bring out the constant coefficients 
+		-> the sum of two derivatives is the same as the derivative of their sum 
+			-> a series of derivatives 
+	-> with products 
+		-> the product rule 
+			-> we want the derivative of v(x)u(x)
+			-> v'u+vu'
+			-> they are both functions of x 
+
+	-> the derivative of a constant is 0   
+	-> changing between two functions 
+	-> taking the differential and then using this to calculate the slope of the tangent 
+
+-> more on calculating derivatives
+	-> differentiating specific functions 
+	-> polynomials
+		-> bring the coefficient down and take away one from the power
+		-> this is the "power rule"
+
+	-> logs 
+		-> the differential of ln is 1/x 
+		-> e^x is the same 
+		-> sin is cos and cos is -sin 
+		-> what a function and its derivative look like 
+
+-> calculating derivatives in Python 
+	-> differential calculus 
+	-> computing derivatives by hand 
+	-> the functions are given to us in array form, rather than by explicit equation 
+	-> importing modules 
+	-> using list comprehension to create a list of the y values which we want to store
+	-> gradient is rate of change of y over x 
+	-> the modules are imported for this, and then the change in the x values are recorded 
+	-> the results of this can be plotted <- calculate the derivative of a function by hand, and then plotting it with Python
+
+-> review 
+	-> differential calculus 
+	-> a limit is the value a function approaches to as we move some x value 
+	-> the slope of a tangent line at some point 
+	-> the rate of change of the gradient for this 
+	-> then calculating derivatives for explicit functions 
+	-> the results to this can be stored in arrays 
+
+-> limit definition of the derivative exploration 
+	-> numerical differentiation in Python 
+	-> taking numerical derivatives
+	-> writing a differentiation function in Python
+	-> the definition of a derivative in limit form 
+	-> there are three functions we already have defined for this 
+	-> math.log() <- the default base for this function is e 
+
+	-> coding definition for the differential in terms of limits, into a Python function 
+		-> putting different numbers in this which we know should work, to test it
+
+	-> these can then be graphed 
+		-> limit derivatives 
+		-> this function can be applied multiple times, for the second order differential etc
+		-> approximating the derivatives of different functions <- e.g a sin or cos 
+		-> whole derivative functions

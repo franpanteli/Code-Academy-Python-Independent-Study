@@ -1,0 +1,430 @@
+-> introduction to circuit playground with Express
+	-> Adafruit Circuit Playground Express with CircuitPython 
+	-> Circuit Playground Express
+		-> this is a development board for electronics and programming 
+			-> for microcontrollers 
+		-> this has different circuit components, including USB capabilities 
+		-> CircuitPython is a version of Python for microcontrollers 
+
+	-> tech specifications
+		-> the components integrated into the Circuit Playground Express 
+		-> LED lights <- 10 NeoPixels, DGB LED lights
+		-> buttons <- buttons A and B and a slide switch 
+		-> speaker <- a mini-speaker
+		-> sensors <- light, temperature, motion, sound, touch 
+		-> microcontroller <- based on real-life specifications 
+		-> power and data <- MicroUSB port for programming and debugging 
+		-> connections pads <- alligator clip pins 
+		-> infrared functions <- this allows remote control functionalities 
+
+	-> working with NeoPixels 
+
+from adafruit_circuitplayground.express import cpx
+cpx.pixels.fill((r, g, b))
+cpx.pixels.fill((255, 0, 0))
+cpx.pixels[0] = (255, 0, 0) # Set first pixel to red
+cpx.pixels[0] = (0, 0, 0)   # Turn off the first pixel
+
+		-> (above)
+			-> each NeoPixel has R, G and B LEDs
+			-> the intensity of these can be changed 
+			-> this can make different colours and can be done with the code 
+			-> cpx manipulates the pixels 
+			-> cpx.pixels.fill((255, 0, 0)) <- this changes the pixels to be red
+			-> they are given different colours, via R, G and B values 
+			-> indexing can be used, for example to target the first pixel we have[0]
+
+	-> using slide switch 
+		-> code can be executed, depending on where the slider is on the switch 
+		-> cpx.switch <- this checks the position of the switch 
+			-> this returns a boolean, where True indicates one value and False indicates another
+		-> this can be used to control other elements on a board 
+
+	-> button interaction 
+
+if cpx.button_a:
+    # action for button A being pressed
+elif cpx.button_b:
+    # action for button B being pressed
+
+
+		-> (above)
+			-> buttons can be used, to trigger different interactions on the board <- e.g, the behaviour of different NeoPixels 
+			-> there are two of these buttons on the board, A and B 
+			-> depending on the status of the buttons on the board, different Python can be executed
+			-> the status of the buttons is accessed using the cpx.button_a and cpx.button_b methods for this 
+
+	-> review 
+		-> the cpx module <- for controlling different components on the board 
+		-> different functions for controlling NeoPixels with colour tuples
+		-> functions for reading the state of the slide switch and buttons 
+			-> there are two buttons for this, A and B 
+			-> the state of the slide switch on the board is returned as a boolean 
+
+		-> the logical flow of a program using loops and conditional statements 
+		-> this is the programming of electronics with Python 
+		-> coding and hardware interaction with the Circuit Playground Express 
+
+		-> extra resources for this 
+			-> there are other courses which can be used to learn more about this 
+			-> continuous learning 
+
+-> components and environment 
+	-> designing a customisable bike light, using the Circuit Playground Express and CircuitPython
+
+	-> this involves 
+		-> lighting management with NeoPixels
+		-> an on/off switch for battery conservation
+		-> implementing blinking capabilities for this 
+
+	-> components and environment 
+		-> Circuit Playground Express
+			-> this is a microcontroller board which is used for this project
+			-> this board has different components 
+				-> 10 LED Neopixels 
+				-> slide switch functionality, to turn the lights on and off
+				-> the ability to run Python, via CircuitPython 
+
+			-> CircuitPython
+				-> this is a version of Python which Is designed for microcontroller programming 
+				-> this simplifies hardware interaction 
+
+			-> libraries
+				-> the Adafruit Circuit Playground Express library <- this is the primary library which uses the features of the Circuit Playground Express
+				-> the Time library <- this introduces delays in code, allowing the Neopixel LEDs to 'blink' 
+
+	-> task walkthrough 
+
+from adafruit_circuitplayground.express import cpx
+while True:
+    cpx.pixels[0] = (255, 0, 0)  # Turns the first NeoPixel red
+cpx.pixels.fill((255, 0, 0))  # Turn all NeoPixels red
+while True:
+    if cpx.switch:  # Check if the switch is on
+        cpx.pixels.fill((255, 0, 0))  # Turn on all NeoPixels red
+    else:
+        cpx.pixels.fill((0, 0, 0))  # Turn off all LEDs
+import time  # Import the time module at the beginning
+
+while True:
+    if cpx.switch:
+        cpx.pixels.fill((255, 0, 0))  # Turn NeoPixels red
+        time.sleep(0.5)                # Hold for 0.5 seconds
+        cpx.pixels.fill((0, 0, 0))     # Turn NeoPixels off
+        time.sleep(0.5)                # Hold off for 0.5 seconds
+    else:
+        cpx.pixels.fill((0, 0, 0))     # Make sure they are off when switch is off
+
+				-> (above)
+					-> modules are first imported 
+					-> the first NeoPixel is first turned red 
+						-> this is done by assigning it an RGB value 
+						-> the first one is accessed using the [0] index, and its RGB value is altered using the cpx module 
+
+					-> this is then extended to all pixels, using the .fill() method 
+
+					-> running the code 
+						-> the script is intended to be run on a circuit 
+						-> this is saved as a .py file onto the CIRCUITPY drivee
+						-> when this is run, then the NeoPixels on the circuit will all light red 
+
+					-> adding on and off functionality 
+						-> to prevent battery drain, we use the slide switch which is built into the circuit 
+						-> this works by using a while block 
+						-> while the value of the slide switch is this boolean value, set the colours of the pixels equal to this on the board 
+							-> otherwise, set the value of the pixels equal to this 
+
+					-> blinking feature 
+						-> we then want the pixels on the board to have blinking feature
+						-> a sleep functionality is added for this 
+						-> the time module is first imported for this, and then a similar while loop is defined as before 
+						-> we are setting the RGB values of all of the pixels on the board equal to something for a set amount of time, and then changing this to another colour after so long 
+						-> then if the switch is turned off, the pixels are all off 
+
+					-> running bug check 
+						-> the code is then run on the board, to make sure that it works 
+						-> we know if the time delay has worked for this if the elements on the board start blinking when the switch is on 
+
+		-> extra things which can be added to this
+			-> extra colours and patterns can be added into the LEDs on the board for this 
+			-> button controls can also be added, to switch between blinking modes 
+			-> this example has just used one button, but we can add in the second 
+				-> switching between a blinking light and a constant one 
+
+			-> Mu editor 
+				-> this is a code editor for writing and uploading CircuitPython code to Circuit Playground Express 
+				-> this is relatively easy to install 
+
+		-> review 
+			-> hardware programming 
+			-> control structures <- loops and conditionals 
+			-> libraries 
+			-> hardware interactions in Python 
+			-> DIY electronics 
+			-> IoT <- the Internet of Things 
+			-> creative project development 
+
+-> controlling audio with Circuit Playground Express (CPX)
+	-> Circuit Playground Express (CPX)
+		-> this is an educational microcontroller board by Adafruit 
+		-> this project is for audio output from the board 
+		-> NeoPixels <- RGB LED lights on the board 
+		-> the board also has A and B buttons 
+		-> another feature of this is its slide switch 
+			-> this takes a boolean True / False value
+
+	-> Audio: play file 
+
+from adafruit_circuitplayground.express import cpx
+while True:
+  if cpx.button_a:
+    cpx.play_file("coin.wav")
+  if cpx.button_b:
+    cpx.play_file("oops.wav")
+
+
+		-> (above)
+			-> import module 
+			-> Circuit Playground Express has a built-in speaker
+			-> this can play audio files 
+				-> the cpx.play_file() function is used to do this 
+				-> these sound files are stored on the CIRCUITPYP drive of the CPX
+			-> the library used for this is Adafruit
+			-> .wav files are audio files 
+			-> the coin.wav and oops.wav audio files are first downloaded onto the drive
+			-> these are then then depending on which button is turned on in the board (A or B), different audio files are then played 
+			-> this is done using the .play_file() method 
+
+	-> Audio: play tone 
+		
+cpx.play_tone(262, 1.0)  # Plays middle C for 1 second
+while True:
+  if cpx.button_a:
+    cpx.play_tone(262, 1)
+  if cpx.button_b:
+    cpx.play_tone(294, 1)
+
+		-> (above)
+			-> this is the same Python as in the previous example, but we are using tone instead of audio files 
+			-> these tones are generated, by using different frequencies
+			-> these are tones, because they are just a frequency <- and not an entire audio (.wav) file 
+
+			-> the .play_tone() method generates one of these tones 
+				-> the first argument to this is the frequency in Hz and the second argument is duration in seconds 
+				-> different frequencies of tone can be assigned to the two buttons 
+				-> a while loop is used with these two methods, so that when the different buttons are pressed on the board then different frequencies of sound will play 
+
+	-> Capacitative touch 
+
+while True:
+  if cpx.touch_A1:
+    cpx.play_tone(262, 0.5)  # C note
+  if cpx.touch_A2:
+    cpx.play_tone(294, 0.5)  # D note
+  if cpx.touch_A3:
+    cpx.play_tone(330, 0.5)  # E note
+  if cpx.touch_A4:
+    cpx.play_tone(349, 0.5)  # F note
+
+		-> (about)
+			-> there are different capacitative touch sensors on the board 
+			-> these are on different capacitor pads, A1-A7
+			-> this is the same code block as in the previous example, except the pads are targeted instead of the two buttons A and B
+			-> these tones have been selected, to resemble musical notes 
+
+	-> Light sensor 
+	
+while True:
+  print(cpx.light)  # Prints the light level to the console
+
+		-> (about)
+			-> there is a light sensor on the circuit
+			-> this can give us recordings of the light levels
+			-> this uses the .light method 
+			-> this code returns the current light level when run on a CPX circuit 
+
+	-> Review
+		-> functions for audio playback and sensor readings 
+		-> there is a Circuit Playground Cheatsheet as a reference for programming and using the various features 
+		-> Mu is the preferred editor for the CPX circuits 
+			-> this has built-in support for viewing several console outputs
+			-> this can help debug and view sensor data
+	
+		-> audio outputs can also be generated using additional methods 
+			-> headphones
+			-> external speakers 
+			-> alligator clips and A0 pins can connect these to the circuit 
+
+		-> audio control / sensor management with the Circuit Playground Express 
+		-> sound outputs and interactive touch sensors 
+		-> using Python to interact with circuits <- telling various elements of the circuit what to do if etc 
+
+-> Plant care monitoring project with Circuit Playground Express (CPX)
+	-> project summary 
+		-> components 
+		-> libraries 
+		-> logic 
+		-> we are using the Adafruit Circuit playground Express to build a device which monitors plant health 
+
+		-> components
+			-> Circuit Playground Express <- this is a microcontroller board which includes various sensors 
+			-> alligator clips for the circuit <- this is used to connect the soil moisture sensor 
+			-> nail <- this acts as an electrical contact for measuring the soil moisture 
+
+		-> libraries which this project uses
+			-> adafruit_circuitplayground.express <- this is for the built-in sensors and functionalities of the Circuit Playground Express
+			-> time <- this library is for time pauses in the code 
+				-> e.g time delays between LEDs on the circuit switching colours 
+
+	-> code 
+		-> importing libraries 
+
+from adafruit_circuitplayground.express import cpx
+from time import sleep
+
+			-> (above)
+				-> this imports the libraries 
+				-> we are using cpx to access the Circuit Playground's features and sleep to pause its execution
+
+		-> an infinite while loop 
+
+while True:
+    print((cpx.temperature, cpx.light))
+    sleep(0.5)
+
+
+			-> (above)
+				-> this is written in the Mu editor 
+				-> this is an infinite loop 
+				-> every 0.5 seconds, the temperature and light readings from the circuit are printed
+				-> this is done using the .temperature and .light methods 
+
+		-> user interaction via buttons 
+
+if cpx.button_a:
+    print("Temperature: ", cpx.temperature)
+if cpx.button_b:
+    print("Light value: ", cpx.light)
+
+			-> (above)
+				-> we have two different buttons in the circuit 
+				-> the first line in this if block targets button A and prints the temperature value in the circuit
+				-> the second line targets button B and prints the light value at that point 
+
+		-> soil moisture sensor 
+
+import touchio
+touch = touchio.TouchIn(A1)
+print(touch.raw_value)
+
+			-> (above)
+				-> this uses an alligator clip and nail for moisture sensing 
+				-> the touchio library is first imported 
+				-> the moisture values for this are read using the .TouchIn method 
+				-> this is then printed at the end of the block 
+				-> the slide switch determines which value for this is being read <- temperature / light or soil moisture values 
+				-> this allows us to visually monitor the plant's health checks through values which are printed when the buttons on the circuit are pressed 
+
+-> 808 drum monitoring project with Circuit Playground Express (CPX)
+	-> project overview 
+		-> simulating a drum machine 
+		-> this is again using Circuit Playground Express
+		-> we are using the capacitative touch pads from this, to trigger drum sounds 
+
+		-> components 
+			-> Circuit Playground Express <- this is the microcontroller we are using (the virtual circuit)
+			-> audio files <- these are in .wav format and are of drum sounds 
+				-> they are to be played when the capacitors in the circuit are touched 
+			-> alligator clips / pennies <- these act as conductive elements when pressed 
+
+		-> libraries 
+			-> audioio <- for audio playback
+			-> touchio <- for reading touch input from the capacitive pads in the circuit 
+			-> digitalio <- for controlling the output of the speaker
+			-> board <- for providing access to the pins on the board 
+			-> time <- to add in time delays
+
+	-> code 
+		-> importing modules 
+
+import audioio
+import touchio
+import board
+import time
+
+from digitalio import DigitalInOut, Direction
+
+bpm = 120  # beats per minute
+
+			-> (about)
+				-> modules are first imported
+				-> the BPM for the drum sounds is then set for this and stored inside the bpm variable 
+
+		-> initialising the speaker 
+
+spkrenable = DigitalInOut(board.SPEAKER_ENABLE)
+spkrenable.direction = Direction.OUTPUT
+spkrenable.value = True
+
+			-> (above)
+				-> this initialises the speaker on the Circuit Playground Express
+				-> the speaker is now enabled for use, using the .SPEAKER_ENABLE method
+				-> we are creating the different methods in the circuit 
+
+		-> creating the touchpads 
+
+capPins = (board.A1, board.A2, board.A3, board.A4, board.A5, board.A6, board.A7)
+touchPad = [touchio.TouchIn(pin) for pin in capPins]
+
+			-> (above)
+				-> we are generating seven instances of capacitative touchpads on the circuit 
+				-> the elements in the code are models of the real-life circuit 
+				-> we first use the seven different capacitors, and then iterate through them and convert them into pins (touch sensors / capacitors)
+				-> this one line iteration is a list comprehension 
+
+		-> loading audio files 
+
+audiofiles = ["bd_tek.wav", "elec_hi_snare.wav", "elec_cymbal.wav", "elec_blip2.wav", "bd_zome.wav", "bass_hit_c.wav", "drum_cowbell.wav"]
+
+			-> (above)
+				-> this creates a list of .wav files 
+				-> each of these is an audio file, which is later to be played - depending on which capacitor is touched on the circuit 
+
+		-> playing the audio files 
+
+def play_file(filename):
+    f = open(filename, "rb")
+    wave = audioio.WaveFile(f)
+    a.play(wave)
+    time.sleep(bpm/960)  # 16th note delay
+
+			-> (above)
+				-> a function is then defined 
+				-> this plays a certain .wav file, depending on which capacitor on the circuit was touched by the user
+				-> this also adds a delay, based on the BPM
+				-> this is a function which is being defined to do this, which means it hasn't actually been called anywhere 
+
+		-> the main loop to detect touches 
+
+while True:
+    for i in range(7):
+        if touchPad[i].value:
+            play_file(audiofiles[i])
+
+			-> (above)
+				-> we are iterating through each of the seven capacitative touchpads, and depending on which has been touched then a given audio file will be played 
+				-> this is implemented by calling the function we just defined (the play_file funciton)
+
+	-> conclusion 
+		-> this allows for a drum machine
+			-> one of the capacitative touchpads are touched, and a given drum machine sound will be played 
+			-> the input for this is touch 
+
+		-> this is hardware programming for circuits in Python
+		-> we first did a project for plant monitoring, and then one for playing different drum audio files 
+			-> sound and user interaction
+
+		-> skills 
+			-> reading sensor data
+			-> managing user inputs 
+			-> controlling audio playback through a microcontroller  

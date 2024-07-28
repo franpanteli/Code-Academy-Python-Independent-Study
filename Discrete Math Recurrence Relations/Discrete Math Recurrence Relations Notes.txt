@@ -1,0 +1,175 @@
+-> review of recursion
+	-> these are functions which compute a value by making a call to itself 
+	-> these use previous values to compute new ones 
+	-> a base case is used for this to prevent an infinite loop
+	-> the general template for a recursive function 
+		-> evaluate the base case(s) of the function 
+			-> these are the termination point for the recursion 
+			-> telling it when to stop 
+			-> then performing necessary operations and calling the function again 
+			-> then returning the computed value for this 
+		-> the Fibonacci sequence is an example of this
+
+	-> questions 
+		-> writing a Python function to calculate n!
+		-> for the inputs 
+		-> 0! = 1
+		-> there are no negative factorials 
+		-> writing a Fibonacci function which calculates elements of the Fibonacci sequence 
+		-> recursively computing n!
+		-> then computing the Python function mod_fib(n)
+			-> there are initial conditions required for this (initialisation)
+		-> defining two functions, a factorial function and a Fibonacci sequence generator function 
+			-> this is done using if blocks under the function definition and returning the next element in the sequence 
+
+-> review of dynamic programming
+	-> calculating the nth term of the Fibonacci sequence 
+	-> this has an exponential complexity with its runtime 
+	-> avoid algorithms which are inefficient 
+	-> these can be made more efficient, by storing the values we have already calculated in a table 
+		-> an array or hash table 
+		-> memoization 
+		-> there is a memo table for this 
+		-> if the value for n has been previously completed 
+		-> there are three steps for this:
+
+#1 Inspect the memo table (array or hash table) to determine if the recursive function has been called for some input n. If the memo table contains an entry for n, this means that the value for n has been previously computed so return that value as opposed to computing it again. If there is no entry for n, proceed to step two
+
+#2 Compute the value recursively and store it in the memo table
+
+#3 Return computed value
+
+	-> the structure of the memo table depends on the data we are dealing with 
+	-> this can be used to optimise recursive functions <- so that we avoid wasting computational power on calculating the same elements in the sequence multiple times 
+	-> then calling recursive at some point
+	-> dictionaries are the most common data structures for this 
+
+-> exercise
+	-> taking the previous Fibonacci generator function and optimising it using dynamic programming 
+	-> this is done with a dictionary 
+	-> the initial conditions (base cases) for the sequence go into this function 
+		-> so we avoid having to calculate them again 
+	-> mapping a key to a dictionary 
+	-> the algorithm which computes this is provided in the figure
+		-> this is provided in the mod_fib function
+
+-> linear recurrence
+	-> linear recurrence relations <- these are equations in a specific summation form 
+	-> the Fibonacci sequence is an example of this 
+	-> it's a series 
+	-> there are boundary (initial) conditions for this
+	-> it looks like quantum mechanics (a linear combination, the big wavefunciton is the sum of the little wavefunctions)
+	-> the solution to an ODE
+	-> solving this problem 
+	-> there are multiple ways of reaching the same answer
+	-> the Fibonacci sequence is one of these solutions 
+	-> summing the solutions to an ODE is also a solution 
+	-> using an identity to find the second boundary condition 
+	-> the number of ways to climb a staircase 
+	-> three types of boxes 
+		-> length 1 and 2 
+		-> filling a space with a given number of boxes 
+	-> boundary conditions are important for this equations
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	-> computing the number of ways to arrange boxes
+		-> and then optimising the solution so we don't have multiple repeats involved 
+	
+-> closed-form solution
+	-> computing the first terms of a recurrence relation 
+	-> larger terms 
+
+	-> closed form solutions <- type in n and the function returns the nth term of the sequence 
+		-> equations for this can be derived 
+		-> homogeneous relations mean there is no explicit dependence on n for this 
+		-> homogenous recurrence relations
+		-> they are solutions to ODEs
+			-> add the solutions and you get another one
+			-> we are in effect dealing with an ansatz for this
+		-> to solve one of these equations, we guess a closed form solution 
+			-> power functions work well for this 
+			-> these are plugged into the recurrence relation 
+			-> this is then rearranged so everything on the RHS equals 0
+			-> generalised, this is the characteristic equation of the recurrence relation 
+
+	-> we have two solutions for this 
+		-> then back substitute in the answers for this so we have the constants in the equation
+		-> substituting these constants back into the equation gives us the general solution
+		-> the closed form solution in the Python function 
+		-> this allows us to have different coefficients for the equation 
+
+	-> for roots that are real and distinct <- e.g as with the Fibonacci sequence 
+		-> the Fibonacci sequence is a linear relation 
+		-> we can determine the constants for this 
+		-> then solving the system of equations for this 
+		-> deriving the characteristic equation
+		-> this is ODE maths
+			-> solving it by hand, and then coding it into a Python function
+		-> we are calculating the recursive equation as we would the solution to an ODE 
+		-> then coding this general solution into a function which can be used to calculate the nth element of the sequence, without having to calculate every element reading up to it 
+			-> this increases the efficiency of the method, because we can just calculate the general nth term  
+
+-> closed-form solution (repeated roots)
+	-> characteristic equations with repeated roots 
+	-> the different possible answers for the ODE 
+		-> the form of ansatz 
+	-> repeated roots have a multiplicity of [n], where n is the number of times a root is repeated 
+		-> the degrees of the different roots 
+	-> the form of the solution to the ODE in this case can be generalised 
+		-> since the solution of an ODE is a summation
+	-> this can be generalised into a closed form solution 
+	-> deriving the characteristic equation, then coding this into a function and computing the roots 
+	-> we need to take into account the boundary conditions and the multiplicity of each of the roots for this 	
+		-> this returns a system of equations 
+		-> two independent functions
+	-> finding the coefficients doing the maths, and then back substituting them into the equation
+	-> this allows us to compute the roots of the characteristic equation
+	-> we need the number of equations to be the same as the number of unknowns 
+
+-> solutions of inhomogeneous recurrence relations
+	-> inhomogeneous <- vs homogenous recurrence relations 
+	-> these take a specific form 
+	-> there is an f(n) term 
+		-> sums of solutions are also solutions 
+		-> this is an inhomogeneous equation because we are adding a constant onto the ODE for this 
+		-> f(n) is a polynomial of degree 2 
+	-> we are accounting for all powers of n < 2
+		-> there are multiple stages to deriving these solutions 
+		-> treat the equation as homogenous rather than inhomogeneous first 
+		-> and then focusing on the extra 'add on the constant to the ODE' part
+		-> this changes the overall form of the solution to the recurrence relation 
+		-> then expanding to get this 
+		-> we also have an initial condition for this 
+	-> grouping all of the variables over onto one side of the equation 
+		-> it's an ODE problem, and doing all of the algebra by hand first
+		-> plugging in an ansatz into the ODE	
+		-> then solving the systems of equations for the constants 
+		-> this derives the particular solution when we use the boundary conditions with this 
+		-> then we add this to the homogenous condition 
+		-> this gives us a closed form solution 
+		-> this is the general process which is for a linear non-homogenous equation 
+			-> it might have been exponential 
+			-> depending on the form of the equation, we ansatz different things 
+
+	-> deriving the homogenous solution for a recurrence relation 
+		-> then the particular solution to this
+		-> then altering this depending not he initial conditions for the problem 
+
+-> review 
+	-> recurrence functions, their applications and how to solve them 
+	-> these are equations where numbers are calculated using those which depend on the initial conditions 
+	-> these are recursive functions 
+		-> dynamic programming can be used to optimise this 
+		-> this value can be retrieved as opposed to being calculated again
+	-> the characteristic equations of polynomials 
+		-> the multiplicity for this 
+		-> closed form solutions 
+		-> temporarily 
+
+	-> homogenous linear recurrence relations 
+		-> these come in specific forms 
+		-> we can then apply an ansatz for this 
+		-> closed form solutions 
+		-> increasing powers of n to obtain the closed form solutions 
+		- inhomogeneous equations are homogenous ones which have another function added on 
+			-> we solve it regularly, and then need an additional ansatz for the function which was added on 
+		-> the particular solution and the general one  	

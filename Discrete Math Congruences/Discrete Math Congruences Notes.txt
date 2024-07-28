@@ -1,0 +1,104 @@
+-> modulo returns the remainder 
+-> a % b
+-> a mod b is congruent to n if (a-b) % n = 0 <- it's a boolean statement 
+	-> n is positive 
+	-> you print those statements 
+
+-> these are for cryptography 
+	-> cyphers 
+	-> Caesar cipher 
+	-> each letter in the alphabet is a number
+		-> these can be shifted 
+
+-> properties of congruences 
+	-> reflexive 
+		-> x relates to y if a relationship between inputs / outputs exist 
+		-> if an input x has at most output y 
+		-> a relates to a / is congruent to a 
+		-> this can be written by the definition of congruences 
+		-> this is a reflexive relation 
+
+	-> symmetric 
+		-> if a is congruent to b mod n for integers a, b, and n with n > 0, then b must also be congruent to a mod n
+		-> if one thing is congruent, then something else is 
+		-> it looks like odd and even functions <- make one of the x's / y's negative 
+
+	-> transitive 
+		-> if a is congruent to b mod n and b is congruent to c mod n, then it must be true that a is congruent to c mod n
+		-> it's a statement that says if two things are congruent then we can chain them to make a third statement 
+		-> to do with sets 
+		-> there is a maths proof for this
+
+-> congruence problems 
+	-> there are three types of these problems to solve 
+		-> we don't know a 
+		-> a equiv to b (mod n)
+		-> a = n*k + b
+		-> another is, we don't know b <- this is the same as solving for a because of the symmetric property of congruences
+		-> if n is unknown, this is equivalent to an integer k in which (a-b)/n is an integer
+		-> this is equivalent to finding every factor of (a-b) since they all divide (a-b) with no remainder
+
+	-> linear congruence problems 
+		-> linear expressions <- in the form of ax + b
+		-> we must perform modular arithmetic (% n) on each term except n itself
+		-> to solve an equation with a mod n in it 
+		-> compute the mod part first 
+		-> 0 is congruent to 0 mod n
+		-> some of these problems can have no solutions 
+		-> it's about how you do algebra with remainder operations in an equation 	
+
+	-> review 
+		-> a is congruent to b mod n if n divides (a-b)
+		-> a is congruent to b mod n if there exists some integer k for which a-b = n*k is true
+			-> a is equiv to b(mod n)
+		-> the reflexive property for congruences states that a is congruent to a mod n
+		-> the symmetric property for congruences states that, if a is congruent to b mod n, then b is congruent to a mod n <- change the signs 
+		-> the transitive property for congruences says that, if a is congruent to b mod n and b is congruent to c mod n, then a is congruent to c mod n <- chaining them 
+		-> these can be used in equations <- there are also many more values for the possibility of the unknown variable 
+			-> some congruences can and can't be solved 
+
+-> the Chinese remainder theorem 
+	-> systems of congruences 
+	-> two or more congruences 
+	-> there are methods for solving systems of them at once
+	-> like simultaneous equations on algebra with remainders
+
+	-> definitions 
+		-> n is prime if the only factors of n are 1 and itself
+		-> the greatest common factor of two integers a and b is the largest number that divides both a and b evenly
+		-> if the greatest common factor of a and b is 1, we say that a and b are relatively prime
+			-> this can be generalised into pair-wise relatively primed 
+			-> ones with the greatest common factor of 1 
+
+	-> with systems of these equations 
+		-> if we have a system of them 
+		-> two of them 
+		-> one number N is the product of a load of little n's 
+		-> we also have an N_k
+		-> the method to solve a system of congruences 
+			-> the Chinese remainder theorem 
+			-> if n_1, n_2 are pairwise relatively prime up to n_m, then there exists a unique solution in a specific form <- it's a longer equation equal to X
+			-> a series 
+		-> you can solve a system of congruences, each one being an equation 
+		-> this method can be used for multiple of them 
+		-> we have a series of different equations for congruences and are solving them <- in this case we have three different congruence equations 
+		-> it looks like a symmetry in Physics question 
+		-> you have a congruence in a specific form which satisfies specific conditions and you want to solve it in a series of differential equations 
+		-> solving each of these congruences individually 
+		-> once we have a solution to each congruence, we find a unique solution using the Chinese remainder theorem 
+		-> this is using a series of computed numbers, to find a value of x which satisfies all of the equations 
+
+		-> it finds a number which all of these different remainder equations is equal to 
+			-> and this can be done with the Python	
+			-> it's the smallest possible one which satisfies it
+			-> then we can test the solution this comes out with, to see if it satisfies the rest of the equations / conditions for this
+
+-> caesar cypher means shift the letters according to the alphabet 
+-> 27 ≡ 14 (mod 6) is False <- to test if something is False 
+-> you solve the problems by hand, and then code them into Python
+-> the integers while we are doing this are positive 
+-> they are doing Fermi problems <- remainders on pizza slices 
+	-> creating congruences to model different situations 
+	-> the division of tasks among team members
+	-> creating a model and seeing what it comes out with 
+-> caesar cyphers can also be performed in Python  

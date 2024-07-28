@@ -1,0 +1,575 @@
+-> K-means clustering 
+	-> introduction to clustering 
+		-> clustering is an unsupervised machine learning technique 
+		-> we are finding patterns and structures in unlabelled data 
+		-> in unsupervised learning, we aren't telling the model what the labels are
+			-> just the number of clusters with we want the model to find, and then it will find them 
+			-> either the data comes with labels or it does not
+		-> applications 
+			-> recommendation engines
+			-> search engines
+			-> market segmentation
+			-> image segmentation
+
+	-> step in K-means clustering algorithm 
+		-> initialising centroids
+			-> this algorithm has iterative steps
+			-> the first step is placing k random centroids in the data space
+			-> a centroid is the center of a cluster 
+			-> code 
+
+import numpy as np
+from sklearn import datasets
+import matplotlib.pyplot as plt
+
+iris = datasets.load_iris()
+samples = iris.data
+x = samples[:, 0]
+y = samples[:, 1]
+
+k = 3
+centroids_x = np.random.uniform(min(x), max(x), size=k)
+centroids_y = np.random.uniform(min(y), max(y), size=k)
+centroids = np.array(list(zip(centroids_x, centroids_y)))
+
+plt.scatter(x, y, alpha=0.5)
+plt.scatter(centroids_x, centroids_y)
+plt.xlabel('sepal length (cm)')
+plt.ylabel('sepal width (cm)')
+plt.show()
+
+			-> (above)
+				-> import modules
+				-> load the dataset <- a dataset of flowers 
+				-> store the values from this dataset into x and y 
+				-> initialise the number of clusters which we want 
+					-> k-means <- k is the number of clusters 
+				-> then generating a random set of coordinates for the initial centroids 
+				-> then plotting these into a scatter graph 
+				-> this creates a plot with the initial datapoints and the randomly placed centroids 
+
+		-> assigning data points to the nearest centroid 
+			-> we then calculate the distance from each point in the set to each centroid 
+			-> each of these datapoints is then assigned to the nearest centroid, depending on its distance t this 
+			-> code 
+
+def distance(a, b):
+    return np.sqrt((a[0] - b[0])**2 + (a[1] - b[1])**2)
+
+labels = np.zeros(len(samples))
+distances = np.zeros(k)
+
+for i in range(len(samples)):
+    distances[0] = distance([x[i], y[i]], centroids[0])
+    distances[1] = distance([x[i], y[i]], centroids[1])
+    distances[2] = distance([x[i], y[i]], centroids[2])
+    cluster = np.argmin(distances)
+    labels[i] = cluster
+
+print(labels)
+
+				-> (above)
+					-> this is a function which calculates the distance from one point to another using Pythagorus 
+					-> an array of zeros is then initialised for the distances between all of the points in the set and the centroid 
+					-> this is then populated with values by using an iterative loop 
+					-> this produces the labels array, which tell us which cluster each datapoint belongs to 
+
+		-> updating the centroids
+			-> so we have data, and we've chosen three (k) random centroids
+			-> then calculated the distance from each point in the set to each centroid, and assigned the points a centroid by doing this 
+			-> we then update the coordinates of the centroids, to be the mean position of all of the datapoints in their cluster 
+			-> code 
+
+from copy import deepcopy
+centroids_old = deepcopy(centroids)
+
+for i in range(k):
+    points = [samples[j] for j in range(len(samples)) if labels[j] == i]
+    centroids[i] = np.mean(points, axis=0)
+
+print(centroids_old)
+print(centroids)
+
+				-> (above)
+					-> import modules 
+					-> copying the array which stores the coordinates of the old centroids 
+					-> then updating these
+						-> loading all of the points in the three different clusters
+						-> then setting the new coordinates of the centroids in these to be the mean of these coordinates for the points in the clusters
+					-> then printing the coordinates of the old centroids and the new updated ones 
+					-> this is one iteration in the algorithm
+
+	-> convergence 
+		-> the previous two steps are repeated until the positions of the centroids converge 
+		-> in which case, the data which belongs to each of them forms a cluster and the position of that centroid is final
+
+-> the Iris dataset
+	-> about the Iris dataset
+		-> this is a dataset which contains measurements of sepals and petals from three Iris species 
+		-> Iris setosa, Iris versicolor, and Iris virginica
+		-> we use K-means to categorise these flowers into three different clusters  
+
+	-> visualising this data 
+		-> code 
+
+import matplotlib.pyplot as plt
+from sklearn import datasets
+
+iris = datasets.load_iris()
+samples = iris.data
+x = samples[:, 0]
+y = samples[:, 1]
+
+plt.scatter(x, y, alpha=0.5)
+plt.xlabel('sepal length (cm)')
+plt.ylabel('sepal width (cm)')
+plt.show()
+
+			-> (above)
+				-> visualising the data before applying K-means 
+				-> we want to see the structure of the data 
+				-> this plot returns the length vs width of sepals in the set 
+				-> importing modules 
+				-> then loading the data, using the .load_iris() method 
+				-> then using methods from matplotlib to generate this plot 
+				-> if you inspect the data like this before doing clustering, then you can start to inspect how many clusters you might want 
+
+	-> practical considerations 
+		-> choosing K 
+			-> this is the number of clusters 
+			-> there are methods to determine what the value of K should be 
+				-> Elbow Method
+				-> the Silhouette score
+				-> domain knowledge
+
+			-> centroid initialisation 
+				-> if the positions of the initial centroids aren't placed correctly, then this can affect the results of the entire algorithm 
+				-> k-means++ can be used to more effectively choose the initial centroid coordinates 
+
+			-> convergence criteria 
+				-> the algorithm stops when the centroids no longer change / change minimally 
+
+	-> summary 
+		-> K-means clustering is used for grouping unlabelled data into clusters 
+		-> iteratively assigning data points to the nearest centroid and re-calculating centroids 
+		-> we are minimising the distance from each of the points to their nearest centroid, to categorise the points into K different clusters 
+
+-> categorising flowers using K-means 
+	-> steps in K-means 
+		-> place K-random centroids for initial clusters
+		-> assign each datapoint to the nearest centroid 
+		-> calculate new centroids by taking the mean of all of the datapoints in the cluster for that centroid 
+		-> repeat this process until the centroids no longer converge (convergence)
+
+	-> in code 
+		-> implementing the loop until convergence 
+		-> we first create an array (`error`), to sore the distance between old and new centroids 
+		-> this is done using error = np.zeros(3)
+		-> there are three centroids in this case <- three species of flower 
+		-> then calculating initial errors 
+			-> we use a `distance` function, to compute distances between centroids and store them in `error`
+			-> code
+
+error[0] = distance(centroids[0], centroids_old[0])
+error[1] = distance(centroids[1], centroids_old[1])
+error[2] = distance(centroids[2], centroids_old[2])
+
+				-> these variables store the Pythagorean distance between the old centroid and the updated one 
+
+		-> while loop for convergence 
+			-> we are running the steps of the algorithm until the distances between the old centroid and the new one converges to 0
+			-> the centroids stop moving 
+			-> this requires a while loop / iteration 
+			-> code 
+
+while error.all() != 0:
+    # Step 2: Assign each data point to the nearest centroid
+    # Step 3: Update centroids
+    # Recalculate errors
+    error[0] = distance(centroids[0], centroids_old[0])
+    error[1] = distance(centroids[1], centroids_old[1])
+    error[2] = distance(centroids[2], centroids_old[2])
+
+				-> while the position of the centroids hasn't converged, run the steps of the algorithm until they do 
+
+		-> visualising the clusters after the centroids converge 
+			-> after the positions of the centroids stop moving, then we can visualise the positions of the clusters 
+			-> visualising the clusters after convergence 
+			-> code 
+
+colors = ['r', 'g', 'b']
+for i in range(k):
+    points = samples[labels == i]
+    plt.scatter(points[:, 0], points[:, 1], c=colors[i], alpha=0.5)
+plt.scatter(centroids[:, 0], centroids[:, 1], marker='D', s=150)
+plt.xlabel('sepal length (cm)')
+plt.ylabel('sepal width (cm)')
+plt.show()
+
+				-> (above)
+					-> the array sets the colours for the plots
+					-> then, using a for loop to plot each of the points on the graph 
+					-> creating a plot from this, using matplotlib 
+
+-> using Scikit-Learn for k-means clustering
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	-> creating and fitting a model 
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+from sklearn.cluster import KMeans
+	-> importing k-means
+
+model = KMeans(n_clusters=3)
+	-> then initialising a model specifying the number of clusters 
+	-> this is stored in a variable, and its argument is the number of clusters we are dealing with 
+
+model.fit(samples)
+	-> this fits the model to the dataset 
+	-> so we've initialised a model, and then trained it using the .fit() method 
+
+labels = model.predict(samples)
+print(labels)
+	-> after fitting the model, now we are using it to predict cluster labels 
+	-> then printing them 
+
+	-> using the model to make predictions
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+new_samples = np.array([[5.7, 4.4, 1.5, 0.4], [6.5, 3.0, 5.5, 0.4], [5.8, 2.7, 5.1, 1.9]])
+	-> this initialises an array of new datapoints 
+	-> we want to predict the cluster of Iris types that the flower with these coordinates belongs to 
+
+new_labels = model.predict(new_samples)
+print(new_labels)
+	-> this then predicts labels for the new data 
+
+x = samples[:, 0]
+y = samples[:, 1]
+plt.scatter(x, y, c=labels, alpha=0.5)
+plt.xlabel('sepal length (cm)')
+plt.ylabel('sepal width (cm)')
+plt.show()
+	-> we are then visualising the clusters from the trained model, using matplotlib 
+	-> this generates a scatter plot for the trained model 
+
+	-> evaluating the results from the trained model 
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+species = np.chararray(target.shape, itemsize=150)
+for i in range(len(samples)):
+    if target[i] == 0:
+        species[i] = 'setosa'
+    elif target[i] == 1:
+        species[i] = 'versicolor'
+    elif target[i] == 2:
+        species[i] = 'virginica'
+	-> this maps the cluster labels to the species 
+	-> we initialise an array for storing string data 
+	-> and then are iterating through the different samples, to classify the datapoint of the flower which we are inputting into the model 
+	-> we are now using the model to make a prediction, and evaluating this
+
+df = pd.DataFrame({'labels': labels, 'species': species})
+ct = pd.crosstab(df['labels'], df['species'])
+print(ct)
+	-> creating a DataFrame to perform cross cross-tabulation 
+	-> this DataFrame is stored in the first variable 
+	-> the .crosstab method is then applied to this, to perform cross-tabulation and make a prediction on the datapoint 
+	-> this is how the results of the model are evaluated 
+
+	-> determining the optimal number of clusters 
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+num_clusters = list(range(1, 9))
+inertias = []
+for k in num_clusters:
+    model = KMeans(n_clusters=k)
+    model.fit(samples)
+    inertias.append(model.inertia_)
+	-> this is an inertia calculating 
+	-> we are listing the number of cluster counts and their inertias 
+	-> iterating through a different number of possible clusters (from 1-9)
+	-> initialising a k-means model for each of these, and fitting it 
+	-> then adding the inertias from each of these models onto the inertias variable 
+	-> this is the elbow method <- iterating through possible cluster numbers and calculating the inertia for each model this produces
+		-> to determine the optimal number of clusters 
+
+plt.plot(num_clusters, inertias, '-o')
+plt.xlabel('Number of Clusters (k)')
+plt.ylabel('Inertia')
+plt.show()
+	-> we don't actually know that 3 is the optimal number of clusters 
+	-> so we are iterating through different possible cluster sizes 
+	-> then calculating the inertias of each of these models 
+	-> this code plots the inertia vs the number of clusters for this, using matplotlib methods
+
+	-> applying k-means on another dataset
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+digits = pd.read_csv("http://archive.ics.uci.edu/ml/machine-learning-databases/optdigits/optdigits.tra", header=None)
+	-> we are loading a new dataset
+	-> this data is from a csv file, and is imported using the .read_csv method
+
+model = KMeans(n_clusters=10)  # For example, if there are 10 clusters
+model.fit(digits)
+labels = model.predict(digits)
+	-> we then write a model for the new dataset 
+	-> this is with the KMeans method, and is stored in a new variable (`model`)
+	-> then fitting this after it has been initialised 
+	-> this can then be used to make predictions 
+
+	-> summary
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+		-> manually implementing K-means / from scratch 
+		-> sci-kit learn for more efficient clustering 
+		-> evaluating the results with cross-tabulation 
+		-> determining the optimal number of clusters using the elbow method
+		-> then applying the technique to a new dataset
+		-> this can be used for multiple different applications 
+
+-> clustering with k-means++
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	-> k-means <- for clustering 
+		-> k-means chooses random initial centroids 
+		-> the way that k-means++ chooses initial centroids is different 
+		-> this is to optimise the output of the algorithm 
+
+	-> traditional k-means 
+		-> steps 
+			-> k-means <- is is the number of centroids (clusters)
+			-> the position of these is randomly chosen 
+			-> each datapoint is then assigned to the nearest centroid - this forms k clusters 
+			-> the positions of the centroids is then recalculated 
+			-> this is repeated, until the positions of the centroids stop changing (convergence)
+
+		-> problems with this 
+			-> suboptimal clusters 
+				-> k-means chooses the position of the initial centroids randomly 
+				-> these can be sub-optimal 
+				-> if we choose the positions of the initial centroids non-randomly, we can get better results 
+
+			-> inertia
+				-> this measures cluster coherence 
+				-> if we repeat the algorithm multiple times and see how the clusters which come out of it change each time this is done
+				-> lower inertia means better clustering 
+				-> random initialisation can means high inertia, due to poor centroid placement 
+				-> so, if you randomly choose the initial positions of the centroids, then the clusters k-means comes out with each time can be different <- and more different because the initial positions of the centroids were randomly chosen 
+
+		-> k-means++
+			-> to choose initial centroid positions 
+				-> this is non-randomly 
+				-> the first centroid is randomly chosen from the datapoints 
+				-> there is a probability distribution for choosing the next centroid <- rather than doing this randomly 
+				-> the next centroid is then selected with a probability proportional to the square of the distance to the nearest existing centroid 
+				-> this spaces out the centroids and leads to more stable clustering 
+				-> this process is repeated until k centroids have been chosen 	
+
+			-> implementing this with scikit-learn 
+				-> sci-kit learn is for k-means and k-means++
+				-> they are using an example with synthetically generated data 
+				-> this is the Python for k-means (traditional)
+
+model = KMeans(init='random', n_clusters=2)
+results = model.fit_predict(values)
+print("Inertia (Random Initialization):", model.inertia_)
+					-> initialising a model using the KMeans method 
+					-> setting this equal to the `model` variable 
+					-> then training this using the .fit_predict method and storing this in the `results` variable 
+					-> then printing the results of this 
+
+				-> for k-means++ 
+
+model = KMeans(n_clusters=2)
+results = model.fit_predict(values)
+print("Inertia (K-Means++ Initialization):", model.inertia_)
+					-> this is the same as before, except that the first argument of the first line is missing 
+					-> this is a clustering algorithm 
+					-> lower inertia means better clustering for this 
+
+		-> visually comparing k-means to k-means++
+			-> comparing the clustering from k-means to k-means++
+			-> k-means++ results in more separated clusters, due to better initial centroid placement 
+			-> the difference between the two is how the initial centroids are selected
+				-> one follows a random selection and the other happens over a distribution 
+
+			-> suboptimal clustering example 
+				-> some points might not align vertically, due to the neutral vertical separation of points 
+				-> by using k-means++ initialisation, centroids are placed more strategically 
+					-> this leads to more natrual clustering
+				-> this is compared to random initialisation <- k-means (not k-means++)
+
+			-> advantages of k-means++
+				-> improved cluster quality <- if the initial positions of the centroids aren't randomly chosen, then the cluster which are produced are more separated
+				-> faster convergence <- we don't need as many iterations of k-means++ to get to the same results as k-means, because the positions of the initial centroids were chosen more effectively  
+				-> ease of implementation <- k-means++ is similar to k-means (the only difference is how the initial positions of the centroids are chosen)
+
+		-> conclusion / tips for implementing this  
+			-> in k-means++, the initial positions of the centroids are selected differently 
+			-> this results in better clustering performance, lower inertia and faster convergence 
+			-> practical tips
+				-> to use k-means++, use init='k-means++' or leave out the init argument in the KMeans method
+				-> you can plot the results from k-means and k-means++ to compare how they perform 
+				-> another way of doing this is by calculating the inertia 
+					-> this can also be used to compare the results from clustering algorithms other than k-means and k-means++
+
+-> handwriting recognition using k-means
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	-> background 
+		-> using k-means to recognise hand writing 
+		-> applications of handwriting recognition 
+			-> postal service 
+			-> ATMs
+			-> evernote 
+			-> expensive 
+		-> we want to recognise hand written images / digits 
+
+	-> getting started with the digits dataset 
+		-> import the modules 
+
+import codecademylib3_seaborn
+import numpy as np
+from matplotlib import pyplot as plt
+from sklearn import datasets
+
+		-> loading the data 
+
+digits = datasets.load_digits()
+print(digits)
+
+			-> this is done using the load_digits() method 
+			-> this is then printed 
+
+		-> exploring data description 
+			-> printing the description of the dataset, using print(digits.DESCR)
+			-> this returns 
+				-> the number of instances 
+				-> the number of attributes 
+				-> the creator of the dataset 
+				-> the date of the that the set was created 
+
+			-> printing the data and target values 
+				-> print(digits.data) <- this the pixel values of each image 
+				-> print(digits.target) <- this displays target values for each image 
+
+			-> visualising the data images
+				-> we have just imported a dataset with images of handwriting and modules for processing these 
+				-> we can display an individual image, or 64 sample images for this 
+				-> to display an individual image for this 
+
+plt.gray()
+plt.matshow(digits.images[100])
+plt.show()
+print(digits.target[100])
+
+					-> (above)
+						-> this returns a plot for one image 
+						-> this is using matplotlib 
+
+				-> to display 64 sample images 
+
+fig = plt.figure(figsize=(6, 6))
+fig.subplots_adjust(left=0, right=1, bottom=0, top=1, hspace=0.05, wspace=0.05)
+for i in range(64):
+    ax = fig.add_subplot(8, 8, i + 1, xticks=[], yticks=[])
+    ax.imshow(digits.images[i], cmap=plt.cm.binary, interpolation='nearest')
+    ax.text(0, 7, str(digits.target[i]))
+plt.show()
+
+					-> (above)
+						-> this creates a series of subplots 
+						-> these are then populated with images using a for loop 
+						-> each of these images is printed using a version fo the same code as in the previous cell 
+						-> the .add_subplot() method is used for this, are the .imshow() and .text() methods
+						-> the plot from this is then shown, using the plt.show() method
+
+				-> k-means clustering 
+					-> code 
+
+from sklearn.cluster import KMeans
+model = KMeans(n_clusters=10, random_state=42)
+model.fit(digits.data)
+
+					-> (above)
+						-> KMeans is first imported 
+						-> a k-means model is then initialised, using 10 clusters 
+						-> the number of clusters is selected for the context <- 10 digits here 
+						-> the model is then fit to the data, using the .fit() method 
+
+				-> visualising data after k-means 
+					-> code 
+
+fig = plt.figure(figsize=(8, 3))
+fig.suptitle('Cluster Center Images', fontsize=14, fontweight='bold')
+for i in range(10):
+    ax = fig.add_subplot(2, 5, 1 + i)
+    ax.imshow(model.cluster_centers_[i].reshape((8, 8)), cmap=plt.cm.binary)
+plt.show()
+
+					-> (above)
+						-> the centroids are first visualised 
+						-> the plot is first created
+							-> this involves a figure and its title 
+							-> the .figure() and .subtitle() methods are used for this 
+
+						-> then the subplots are populated for this 
+							-> iterating through the different images 
+							-> each time this is done, a new plot is generated
+
+						-> the overall plot this produces is then shown, using the .show() method 
+						-> creating a figure and setting the title 
+						-> and then looping through the cluster centres and displaying each 
+
+				-> testing the model 
+					-> code 
+
+new_samples = np.array([[...]])
+new_labels = model.predict(new_samples)
+print(new_labels)
+for i in range(len(new_labels)):
+    if new_labels[i] == 0:
+        print(0, end='')
+    elif new_labels[i] == 1:
+        print(9, end='')
+    elif new_labels[i] == 2:
+        print(2, end='')
+    elif new_labels[i] == 3:
+        print(1, end='')
+    elif new_labels[i] == 4:
+        print(6, end='')
+    elif new_labels[i] == 5:
+        print(8, end='')
+    elif new_labels[i] == 6:
+        print(4, end='')
+    elif new_labels[i] == 7:
+        print(5, end='')
+    elif new_labels[i] == 8:
+        print(7, end='')
+    elif new_labels[i] == 9:
+        print(3, end='')
+
+						-> (above)
+							-> testing the model with new samples 
+							-> we first get an array from the html file in the Code Academy UI 
+							-> this array is stored in the variable called new_samples 
+							-> this is then used to predict new labels 
+								-> the .predict() method is used for this and the result from it is stored in the new_labels variable 
+								-> the value of this is then printed 
+							-> we then create a mapping of cluster indices to actual digits 
+								-> this is done using a for loop and a series of elif blocks 
+								-> depending on the label we are iterating through, the value of its index will be printed 
+								-> one is added to each element of this block when doing so, to remove the zero-indexed nature of this
+
+				-> conclusions / takeaways 
+					-> grouping unlabelled data into classes 
+					-> building machine learning models 
+						-> an extension to this is perceptrons <- there is another course for this
+					-> start by inspecting the dataset, by plotting it 
+					-> then using k-means clustering
+					-> this requires us to define the number of clusters and fit the data for this 
+					-> the centroids from this as well as the clusters it produces can be plotted, to see how the algorithm is doing this
+					-> once the model is trained, it can then be tested on data which is specifically reserved for this 
+					-> this is for recognising handwritten digits
+					-> k-means is a machine learning algorithm

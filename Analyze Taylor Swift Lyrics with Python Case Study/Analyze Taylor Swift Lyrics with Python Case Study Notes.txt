@@ -1,0 +1,169 @@
+-> Analyze Taylor Swift Lyrics with Python
+	-> extra resources 
+		-> there is a cheatsheet for this 
+		-> and a solution notebook 
+		-> there is a dataset of Taylor Swift lyrics for this 
+
+	-> importing modules 
+
+	-> then loading dataset 
+		-> this dataset is loaded, using the pd.read_csv() method
+		-> the head of this is then printed, using the .head() method 
+		-> some of the metadata of this is printed, using the .info() method 
+			-> this returns the number of rows, if there are missing values and the variable types for this
+				-> this also returns other information about the dataset 
+		-> these lyrics were imported in from a csv file which is stored in the same directory as the .ipynb file in Code Academy's environment 
+			-> Taylor Swift lyrics 
+	
+	-> adding essential data
+		-> we are adding data to the dataset which it doesn't have 
+			-> this one doesn't have years 
+			-> the years that the albums were released in 
+			-> we can merge a dataset, or manually create a new column 
+			-> this is put into a function, which returns the year of the lyrics depending on the name of the album they are form 
+			-> this function is then applied to the `lyrics` DataFrame, to create a new column 
+			-> these album names can then be printed, using lyrics.album_name.unique()
+
+		-> once this data is added in a new column, then this can be checked 	
+			-> using the .head() method returns the head of the dataframe 
+			-> this lets us see if the new column has been added on or not 
+
+	-> clean the lyric text
+		-> we want to process the data before counting keyword mentions 
+		-> processing data
+			-> lowercasing everything <- the str.lower() method, on the 'lyric' column of the dataset 
+			-> then removing punctuation <- this is done using regex (.str.replace('[^\w\s]','')) 
+			-> excluding stop words <- an array is defined with these words in them (stop = ['the', 'a', 'th ...)
+				-> common words which don't have meaning are removed
+				-> this is used to apply a function to each word in the series 
+				-> splitting each string into a list of words, iterating over this and including the words which aren't in the filter list
+				-> then joining them together again, once the stop words have been removed 
+				-> there are multiple different built-in lists of stop words which we can use for this
+
+		-> we want to process the data (song lyrics in the dataframe), and then save this in a new column in the dataframe 
+		-> again, using the .head() method to check the this has worked
+		-> applying the split and then printing out the result to show what this does to the dataset 
+		-> repeating this with the .join method
+		-> then dropping the illustration columns 
+
+	-> find keyword mentions 
+		-> counting how many times 'midnight' occurs in Swift's lyrics 
+		-> a new column to indicate if a lyric has midnight in it <- this is populated using the .contains method
+		-> counting these for the number of mentions <- this is done using the .sum() method
+
+	-> expanding the keyword list 
+		-> expanding the keyword list with more night / day words 
+			-> three arrays are defined for this
+			-> night, day and time arrays 
+			-> these contain strings with more keywords 
+			-> then creating a regular expression string for each list of words and joining these together 
+
+		-> one column for night words and another with day words
+		-> then joining the list into a regular string using the .join() method 
+		-> checking the clean lyrics for the presence of words in the regular expressions 
+			-> this is done using the .contains() method
+
+		-> counting the number times the words appeared and printing them to the screen 
+			-> this is done using the .sum() method
+
+		-> then inspecting the first rows of the lyrics DataFrame to check this has been done properly 
+			-> this is done using the .head() method
+
+	-> visualising 
+		-> mentions of time in the lyrics
+		-> creating a new dataframe that lists the mentions of time per year
+			-> this is done using the lyrics.groupby() method 
+			-> then retuning this dataframe 
+		-> then generating a line chart / time series out of this using matplotlib 
+			-> this is done using the .plot method from matplotlib 
+
+	-> answering questions about the dataset
+		-> which albums are most night / day focused?
+			-> we have a table of counts 
+			-> which albums have the most mentions of days / nights
+			-> adding the album names into the dataframe 
+			-> .sort_values() <- to order the yearly_mentions table
+
+			-> for this 
+				-> we first read in the album year name csv file 
+					-> this is done using the .read_csv method 
+				-> then voting the values in this table according to ascending values 
+					-> this is done using the .sort_values method
+					-> we do this three times, for yearly mentions, album year and album name 
+
+		-> compare day to night mentions
+			-> we then create a second line chart, with the night mentions and the day mentions 
+			-> this is done using the previously sorted data and matplotlib 
+				-> this returns a line graph with the different mentions of night and daytime lyrics in Taylor Swift songs 
+
+		-> investigating the position of day vs night mentions within albums 
+			-> the references to time aren't always about when the album is released
+			-> they can be able where in the album the mentions of night and day are
+				-> creating a variable that indicates the position of a lyric in an album 
+				-> then grouping mentions by position in the album and taking the sum of this
+			-> the head of the dataframe can be printed to make sure this is done properly 
+
+			-> the position is the track plus the line on the number track which is appears
+			-> then grouping by this position, using the .groupby() method 
+			-> and plotting this result, using matplotlib methods
+
+		-> tokenising the lyrics 
+			-> tokenising the lyrics 
+			-> this is breaking up words 
+			-> the output is a list of words which we can perform text analysis on 
+			-> performing tokenisation 
+				-> stages for this 
+					-> running the cell to tokenise cleaned lyrics 
+						-> this is done using the .split() method 
+					-> inspecting the first few rows of the lyrics DataFrame 
+						-> this is done using the .head() method
+					-> creating a list of all the tokens in the lyrics_tok column into one list 
+					-> then using the counter function from the collections package, to count the number of times each word appears 
+						-> this is done using the .Counter() method
+					-> then sorting the resulting dictionary from this
+						-> this is done using the sorted() method
+
+		-> analysing lyric sentiment 
+			-> if Swift writes about days or nights more favourably 
+			-> we are doing this using a pre-trained sentiment classifier that comes with NLTK 
+			-> this is trined on tweets and is best for short text 
+			-> this returns 4 values <- positive, negative, neutral and compound 
+				-> we can feed words into it, and it will tell us if they are positive or negative 
+				-> this is usually for tweets, and is being repurposed for song lyrics here 
+				-> compound is the normalised sum of positive and negative 
+
+			-> process for this analysis 
+				-> running the sentiment analyser cell using NLTK 
+				-> applying the sentiment analyser to the clean_lyric column of the DataFrame, with a lambda expression 
+					-> these are also anonymous functions 
+					-> this is a more compact way of defining a function, without having to use the longer def ...(...): syntax 
+				-> then running the cell that transforms the dictionary into columns of the DataFrame 
+
+			-> stages in this 
+				-> a package is first added from NLTK from the sentiment analyser 
+				-> this is done using the nltk.download() method 
+				-> this is then tested using the .polarity_scores() method 
+				-> the .apply() method is then used with a lambda function for this
+				-> we can see how this operates on the data, by using the .head() method on this
+
+		-> corpus sentiment analysis
+			-> we now have sentiment for all of the Taylor Swift lyrics in the set 
+			-> we want to learn about the overall sentiment of the lyrics, and how this has changed over time 
+				-> this is using pos, neg and compound columns  
+					-> this is calculated using the sum of these columns in the dataset, and then storing the result in variables 
+					-> doing this for positive, negative and compound values and then printing them 
+				-> calculating the overall sentiment of the entire collection
+			-> then using the groupby function and matplotlib to visualise the overall sentiment of her albums over time
+				-> this involves taking the results from this and first using the .groupby() method to organise them 
+				-> and then plotting them onto a graph using matplotlib 
+				-> so we end up with a time series of the average sentiment of her song lyrics 
+
+		-> day or night? Positive or negative 
+			-> then creating two DataFrames, one for lyrics about daytime and one for lyrics about nighttime
+				-> these are stored in their own variables, and are filtered for 'night'==Tue or 'day'==True when doing this
+			-> checking that the lengths of these are correct and checking their sentiments
+				-> this involves printing the length of the two DataFrames we just created
+			-> then seeing if she writes more positively about night or day 
+				-> we first have to calculate the sentiments of both of the DataFrames we just created 
+				-> these are stored in their own valuables and are calculated using the .sum() method
+				-> the results from this are them printed 

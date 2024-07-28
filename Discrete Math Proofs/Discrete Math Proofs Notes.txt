@@ -1,0 +1,70 @@
+-> mathematical proofs and induction 
+-> types of proof
+	-> direct proof 
+		-> proving something directly 
+		-> this doesn't require an inductive step 
+		-> we already assume the statement is true 
+		-> establishing a connection between the hypothesis and conclusion
+
+	-> contrapositive proof 
+		-> a statement is proven by showing that it is contrapositive
+		-> negation of the conclusions implies the negation of the hypothesis 
+
+	-> proof by contradiction 
+		-> assuming the negation of what is to be proven, and then deriving a contradiction to this 
+		-> if we have a statement we want to prove, we assume it's not true and then find an example or do algebra to show that this is not the case 
+
+	-> examples of direct proof 
+		-> approaches for this
+			-> if one statement is true, then the other must be 
+				-> we assume it is, and then show this using induction 
+
+			-> proof by contradiction 
+				-> negating what we want to prove, and then deriving a contradiction from this 
+				-> we assume the opposite and show it leads to an inconsistency 
+				-> then therefore the original statement must be true 
+
+		-> examples involving algebra  
+			-> proving that for any integer n, if n is even then n^2 is also even 
+				-> this is done with algebra 
+				-> you can prove this directly 
+				-> even numbers (meaning multiples of 2)
+	
+
+			-> second example 
+				-> proving that the square root of 2 is irrational 
+				-> this can be done using proof by contradiction 
+				-> if we assume root 2 is rational, then it equals a over b 
+				-> a and b are integers with no common factors 
+				-> then we square both sides of the equation, which means one is even 
+				-> this means both sides are divisible by 4 - so a and b have no common factors 
+
+	-> inductive examples 
+		-> proving the sum of the first n numbers is n(n+1)/2 
+			-> this can be done by induction 
+			-> showing that this works for the case of n=1
+			-> then we assume this for k+1 
+			-> which holds true by induction 
+
+		-> then proving by strong induction 
+			-> strong induction means that instead of n=1 and then induction, we need to prove that the statement works for multiple different base cases (not just one)
+			-> then comes the inductive steps 
+
+	-> advanced optics and applications 
+		-> recurrence relations 
+			-> indiction is usually used for this 
+			-> here, the value of a function is defined in terms of previous ones <- e.g the Fibonacci sequence 
+
+		-> combinatorial proofs 
+			-> induction is the method which is most commonly used for this 
+			-> mathematical objects are counted / arranged according to specific rules 
+			-> e.g, for binomial coefficients / partitions 
+
+		-> advanced mathematical structures 
+			-> this is for more complex proofs 
+			-> groups, rings and fields 
+			-> using this to prove properties and theorems 
+
+	-> conclusions 
+		-> proofs <- induction, direct proof and proof by contradiction  
+		-> these proofs can be used for reasoning / pure maths / computer science  

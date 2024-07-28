@@ -1,0 +1,61 @@
+-> traffic safety data
+-> the relationship between smart phone usage and car collisions 
+	-> safety improvements 
+	-> sensors on cars 
+	-> trends in traffic safety 
+		-> car crashes over time 
+		-> correlations and predicting car crashes over time 
+	-> monthly collisions totals in the US over time 
+	-> normalising collisions to the size of the US population 
+		-> there is a graph for this 
+		-> distraction data 
+		-> comparing crash rates to smart phone usage 
+			-> the correlation between this 
+			-> correlation is not causation 
+
+-> analyse traffic safety data with Python
+	-> car collision rates and smartphone usage over time 
+	-> an analysis to visualise time series data 
+	-> cleaning and modifying the dataset 
+	-> the original dataset is front the National Highway Traffic Safety Administration’s website
+	-> comparing two different datasets 
+		-> a car crash one and one for the number of smart phone uses 
+
+-> stages that the notebook goes through 
+	-> import modules 
+	-> print the head of the dataset 
+	-> printing the datatypes
+	-> then converting the date column to a data time format
+		-> this is done using the .to)datetime() method 
+	
+	-> then creating plots 	
+		-> then using the seaborn module to write a line plot for the crashes data   
+		-> then, a box plot for this across the different seasons 
+			-> this is done using the sns.boxplot() method
+
+	-> reading in the second dataset
+		-> this is read in using the pd.read_csv method 
+		-> and then the head of this is returned, using the .head() method
+		-> processing this data
+			-> the time data in this is formatted, using the .to_datetime() method
+			-> then again visualised, using the .lineplot() method   
+
+	-> then relating the two datasets together 
+		-> on a graph 
+			-> this is done using the sns.regplot method 
+			-> and then the plot is shown using plt.show() method
+
+		-> calculating regression statistics 
+			-> we want to check id the correlation between two values is statistically significant 
+			-> the Pearson r coefficient and the p value of this 
+			-> the pearsonr method is used for this, then printing the results 
+
+		-> then using linear regression 
+			-> we are then using linear regression to predict crash rates
+			-> we first use the .reshape() method on both datasets, to normalise them
+			-> and then write a linear regression model, using the LinearRegression() and lm.fit methods to create this and fit it  
+				-> the .intercept and .coeff methods can be used to extract m and c for this on a linear regression model 
+			-> then this can be used to make predictions, based on the equation for the linear line of best fit it produces 
+				-> then these predictions can be compared to the actual rate for this
+				-> converting the result to a datetime object using the .to_datetime() method
+				-> we can then visualise these predictions, by making scatter plots using the plt.scatter() method

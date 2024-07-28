@@ -1,0 +1,143 @@
+-> publication plots with seaborn 
+-> you need a dataset to make plots on 
+-> module imports which are frequently run are
+
+import pandas as pd
+import seaborn as sns
+from matplotlib import pyplot as plt
+import numpy as np
+
+-> pd.read_csv('BRFSS_sample.csv') <- to load data from a csv file 
+
+-> health.head() <- to return the first 5 lines of a dataset, stored in the variable head
+	-> plants_long.head() <- to look at the data in long format 
+	-> you can have an argument in this as a number, in which case it won't be the first 5 lines of the dataset which are printed 
+
+-> plt.rcParams['figure.dpi']=72 <- for the dots per inch of the figures which are generated
+	-> this is for the resolution of the images which are generated 
+
+-> %matplotlib inline <- this is a magic command to make sure that the plots produced are inside the notebook 
+
+-> categorical vs numerical data
+	-> waste['income'] = waste['income'].astype('category').cat.set_categories(['Low', 'Lower Middle', 'Upper Middle', 'High'], ordered=True)
+		-> this transforms the income column to a categorical datatype  
+		-> we are taking miners for people's different incomes and converting them into categorical bins 
+			-> low / lower middle / upper middle income / high income types 
+
+-> plants.drop(['Time','Plant'], axis=1, inplace=True) <- this removes certain columns from the dataset, by using pandas 
+	-> axis=1 for this means we are dropping columns and axis=0 means we are dropping rows from the dataset 
+
+-> sns.barplot <- to make a marplot using the sns module 
+	-> this is for categorical variables 
+	-> there are arguments for these which can be used to add error bars in
+
+	-> sns.barplot(data=fires, x='firespots', y='state', errcolor='blue', errwidth=2, capsize=0.3)
+		-> this adds in error bars for this 
+
+	-> the plt.show() method is again needed for this, in the cell which the plot(s) is / are being generated from
+	-> the plot will show in a rectangle, if we want to remove the top and right most borders of this then the following two lines are used 
+		-> p.spines['top'].set_visible(False)
+		-> p.spines['right'].set_visible(False)
+
+	-> to add means to this 
+		-> mean_msw = waste.groupby('income')['msw'].mean().round(2)
+			-> this calculates the mean of the dataset which is being plotted on the bar chart, rounds it to 2 decimal places and stores it in a variable 
+		-> we then want to add the mean to the end of each bar on the plot 
+		-> the weight parameter has different values for this 
+		-> this is done using the .annotate() method, for each bar on the plot 
+			-> p.annotate(text="0.16", xy=(0.17,0), weight='bold')
+
+-> sns.histplot(data=health, x='SleepTime', bins=16) <- to make a histogram using the sns module 
+	-> the distribution of one type of data 
+	-> these are made from a dataset, and seaborn will automatically calculate the number of bins which are needed 
+		-> you can also deliberately set the number of bins for this, using the bins argument 
+		-> but if this argument is omitted then the number of bins will be calculated automatically 
+
+	-> sns.displot(kind='hist', data=plants, x='Plant_height', hue='PH', col='PH') 
+		-> we can plot multiple different pieces of data on the same histogram 
+		-> this takes those and separates them out 
+		-> in this case we would then have a 1x3 grid of histogram plots and each would have a histogram for one set of data 
+
+-> sns.kdeplot(data=health, x='SleepTime', fill=True, bw_adjust= <- to make a kde plot using the sns module 
+	-> this is a probability density curve of the data
+	-> it's a histogram but it's continuous not discrete 
+	-> kernel density estimate  
+		-> density <- the probability density 
+		-> kernel <- "a kernel connects and manages resources for a computer's operating system and components"
+
+	-> sns.displot(kind='kde', data=plants, x='Plant_height', hue='PH', col='PH', fill=True)
+		-> multiple different sets of data can be plotted on the same kde plot 
+		-> this line turns them into a (in this case) 1x3 plot of different kde plots, produced by the same cell 
+
+-> health.loc[(health["SleepTime"] < 15) & (health["SleepTime"] <- to create a subset of the larger dataset
+	-> this is another example of subsetting the data <- converting it into subsets 
+
+fires_sub = fires[fires['state'].isin(['AMAZONAS', 'PARA', 'RONDONIA']) & 
+                  fires['year'].isin([1999,2009,2019]) & 
+                  fires['month'].isin(list(range(7,13)))]
+
+			-> three different subsets, then we can produce different plots of each 
+
+-> plt.show() <- to show these plots 
+	-> this is included in the same cells which the plots are generated in in an ipynb file 
+
+-> sns.boxplot(data=health_sub, x='SleepTime', y='MentalHealth', <- to make a box plot using the sns module 
+	-> these show outliers and are horizontal as opposed to vertical by default 
+	-> these can be used to plot multiple different box plots stacked on the same graph 
+
+-> sns.catplot(data=health_sub, kind='box', col='AlcoholDrinki <- to make a box plot where the bars are vertical, instead of horizontal 
+	-> a count plot for the frequencies 
+	-> the bars are vertical for these plots
+
+-> sns.lineplot(data=plants_long, x='Time', y='Plant_height', hue='Plant', style='Plant', linewidth=2, palette='bright') <- to create a line plot using the sns module 
+	-> these are like time series
+	-> how a value changes over time
+	-> data can be used of for this method which has a confidence interval, in which case the plot it produces is a line with a shaded area around it 
+		-> there is an argument for this which is ci, and to remove it in this case then an argument can be added which is ci=None
+
+	-> sns.lineplot(data=fires, x='month', y='firespots', err_style='bars')
+		-> instead of having a shaded area around it for the errors, this line will change the shaded area to actual error bars coming out of the line plot 
+		-> the line plot is a continuous time series, a line which 'connects the dots' between the points 
+		-> this adds error bars where each of those points are, rather than connecting the error bars in a shaded region around the main line on the graph 
+
+	-> sns.lineplot(data=plants, x='Time', y='Lateral_spread', hue='PH') <- this is another example of this, in which multiple different datasets can be plotted on the same line plot 
+		-> each of these can have their own error bars (shaded as continuous regions around each of the lines), with their hues changed so that they are slightly transparent
+		-> in this case then the plot needs a legend 
+
+		-> sns.lineplot(data=plants, x='Time', y='Lateral_spread', hue='PH', style='PH', linewidth=3, ci=None)
+			-> the arguments of this can be changed, which will remove the shaded error bar regions around each of the lines on the plot 
+			-> this changes the line widths 
+			-> the shaded areas for the error bars / regions around each of the lines on the graphs are referred to as the confidence intervals <- ci
+
+	-> sns.lineplot(data=heights, x='Time', y='Plant_height', hue='Plant', linewidth=3) <- this is an example of this used which creates many different line plots on the same one graph, without error bars 
+		-> a legend is automatically created as part of this if multiple different lines are plotted
+		-> the plt.show() method also has to be used, to ensure that this is visible 
+
+-> sns.scatterplot(data=waste, x='glass', y='plastic') <- to make a scatterplot using the sns module 
+	-> these are made between two variables 
+	-> you can plot multiple different sets on the same scatterplot, in which case they will show up in different colours 
+	-> sns.scatterplot(data=plants, x='Plant_height', y='Leaf_length', hue='PH', style='PH', s=100)
+		-> to make the point styles and sizes different for the different datapoints on the scatterplot  
+
+-> fireplot = sns.relplot(kind='line', data=fires_sub, x='month', y='firespots', col='state', hue='year', style='year', palette='colorblind', linewidth=3) <- to plot multiple different plots out of the same ipynb cell (this does three all on one row)
+	-> three of them in this example 
+	-> sns.set_theme(font_scale=1.3) <- this can be used to set the scale for these plots 
+	-> the plt.show() method also has to be used 
+
+-> sns.pairplot(data=plants) <- in this case, this prints a 4x4 grid of scatter plots and histograms of the numeric variables in the dataset 
+	-> again using plt.show() to make sure the plots from this are visible 
+
+-> blended sequential palettes
+	-> the darker the colour, the larger the number
+	-> we are creating a colour palette for heat maps in seaborn, which goes from one colour at one extreme to another at the other extreme 
+	-> plantpal = sns.color_palette('blend:orange,blue', n_colors=5)
+		-> create a colour palette which does from orange at one end, to blue at the other and has 5 different colours in between 
+
+	-> sns.palplot(plantpal) <- plot this so we can see it 
+		-> this looks like a seaborn heat map 
+
+	-> this can then be uses as an argument for a line plot <- palette=plantpal
+		-> another argument which can be taken for this is palette='colorblind' 
+			-> this is a default palette and does not need to be defined 
+			-> if we are using a palette which he have defined, then the darker the colour the higher the value of the different pieces of data
+			-> this can be void of meaning, depending on the context -> in which case it is better to use a default palette for this

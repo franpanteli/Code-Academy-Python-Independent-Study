@@ -1,0 +1,172 @@
+ -> about  
+	-> understanding perceptrons <- the different components of them 
+		-> this is a type of linear classifier for neural networks
+	-> implementing perceptrons in Python 
+	-> their relation to linear classifiers and logic gates
+
+-> understanding the perceptron	
+	-> this is a model of a biological neurone 
+	-> this can make decisions based on its inputs 
+		-> this works by 
+			-> applying weights to the inputs
+			-> summing them 
+			-> applying an activation function 
+			-> producing an output 
+
+		-> the key components of a perceptron model 
+			-> inputs (x)
+				-> features input into the model 
+				-> these can be 0 or 1 values, for example 
+
+			-> weights (w)
+				-> these are parameters which reflect the importance of each feature inputted into the model 
+				-> these weights are adjusted by the model, to minimise the error of the model 
+
+			-> bias (b)
+				-> this allows the model to make shifts in the decision boundary 
+				-> this can be conceptualised as a weight associated with a constant input of 1 
+
+			-> output (y)
+				-> this is the decision which the perceptron makes 
+				-> this is usually binary in initial implementations of the model 
+
+-> mathematical representation 
+	-> [ z = w_1x_1 + w_2x_2 + ... + w_nx_n + b ] <- this is the weighted sum of the inputs plus bias for the model
+		-> z <- activation value
+		-> w <- weights
+		-> x <- input values
+		-> b <- model bias
+
+	-> activation functions 
+		-> these are usually step, sign or sigmoid activation functions and can be used to determine the output of the model 
+			-> if (z \geq 0), output 1
+			-> if (z < 0), output -1
+		-> they are normalised between 1 and -1
+
+-> defining a Perceptron class in Python 
+
+class Perceptron:
+    def __init__(self, num_inputs=2, weights=None):
+        if weights is None:
+            # Initialize with random weights
+            self.weights = [1.0] * num_inputs
+        else:
+            self.weights = weights
+        self.bias = 1.0  # Default bias can also be a parameter
+    
+    def weighted_sum(self, inputs):
+        # Calculate the weighted sum
+        z = sum(w * x for w, x in zip(self.weights, inputs)) + self.bias
+        return z
+
+    def activation(self, z):
+        # Step activation function
+        return 1 if z >= 0 else -1
+
+    def predict(self, inputs):
+        weighted_sum = self.weighted_sum(inputs)
+        return self.activation(weighted_sum)
+
+    def train(self, training_data, labels, epochs=10):
+        for _ in range(epochs):  # Loop through the training process
+            for inputs, label in zip(training_data, labels):
+                prediction = self.predict(inputs)
+                error = label - prediction
+                # Update weights
+                self.weights = [w + error * x for w, x in zip(self.weights, inputs)]
+                self.bias += error  # Update only the bias
+
+	-> (above)
+		-> weights for this are randomly initialised 
+		-> bias is also given as a parameter
+		-> multiple functions are then defined, for an instance of the class to work properly
+			-> the weighted sum function <- this calculates the weighted sum of the data, given where the model currently is
+			-> the activation function <- this implements a step activation function for the model 
+			-> the predict function <- this applies the activation function to the data in the model 
+			-> the train function <- this trains the perceptron, using an iterative process 
+				-> one epoch is one time that the model is trained on all of the training data for this
+				-> this trains the model on the set by performing one iteration per epoch 
+				-> each time this is done, the weights and bias methods are called 
+
+-> training and testing the perceptron 
+	-> implementing an AND gate using the perceptron 
+
+# AND Gate Input and Output
+data = [[0, 0], [0, 1], [1, 0], [1, 1]]  # Each pair represents inputs x1 and x2
+labels = [0, 0, 0, 1]  # Corresponding labels
+
+# Create the perceptron instance
+classifier = Perceptron(num_inputs=2)
+
+# Train the model with the data for a specified number of epochs
+classifier.train(data, labels, epochs=10)
+
+# Test the classifier
+for point in data:
+    print(f"Input: {point}, Predicted Output: {classifier.predict(point)}, True Output: {labels[data.index(point)]}")
+
+
+		-> (above)
+			-> the training data is first defined in an array 
+			-> the labels for this are then stored in the `labels` variable 
+
+			-> the perceptron is then trained 
+				-> an instance of the perceptron class is first created
+				-> the train method is then used on this, with the data we just defined as its input 
+				-> the classifier for this is then tested
+
+-> visualising the decision boundary
+	-> to visualise how the perceptron figures out the decision boundary 
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Prepare data for visualization
+x0 = [x[0] for x in data]
+y0 = [x[1] for x in data]
+
+# Plotting
+plt.scatter(x0, y0, c=labels, cmap='bwr', marker='o', edgecolor='k')
+plt.xlabel("Input 1")
+plt.ylabel("Input 2")
+plt.title("AND Gate Decision Boundary")
+
+# Create a grid to plot decision boundary
+xx, yy = np.meshgrid(np.arange(-0.5, 1.5, 0.01), np.arange(-0.5, 1.5, 0.01))
+Z = np.array([classifier.predict([x, y]) for x, y in zip(np.ravel(xx), np.ravel(yy))])
+Z = Z.reshape(xx.shape)
+
+plt.contourf(xx, yy, Z, alpha=0.2)
+plt.xlim(-0.5, 1.5)
+plt.ylim(-0.5, 1.5)
+
+plt.show()
+
+		-> (above)
+			-> modules are first imported
+			-> data is then initialised in variables, for visualisation 
+			-> this is then plotted in a scatterplot, using matplotlib 
+			-> a grid is then created for this, to plot the decision boundary from when the model is trained 
+				-> this is done using the .meshgrid() method 
+				-> contours are added to this, using the .contour() method 
+				-> this is then shown, using the .show() method
+
+-> exploring other logic gates
+	-> XOR gate 
+		-> this is not linearly separable, so it cannot be modelled by a single perceptron
+		-> gates can be represented by matrices
+		-> the output is 1 when either one input is 1 (not both)
+		-> to implement this logic gate
+			-> this requires a multilayer perceptron (MLP), rather than a single perceptron 
+			-> this can alternatively be achieved by having a neural network with one hidden layer 
+
+	-> OR gate 
+		-> this outputs 1 if at least one input is 1
+		-> perceptrons can learn this, because the data is linearly separable   
+
+-> review
+	-> a single perceptron can only solve linearly separable problems <- AND, OR gates 
+		-> but not XOR <- in which case, multiple perceptrons must be stacked
+	-> the perceptron model and its applications 
+	-> machine learning fundamentals 
+	-> visualising the model while it is being trained  

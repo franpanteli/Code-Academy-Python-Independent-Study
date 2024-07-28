@@ -1,0 +1,111 @@
+-> introduction to linear algebra 
+	-> vectors 
+		-> representations 
+			-> magnitude and direction 
+			-> in space / genetical objects  
+			-> these are visualised as arrows 
+
+		-> operations 
+			-> to add and take away vectors, add and take away their elements component-wise 
+			-> for multiplication by a scalar, you can bring it inside the vector and multiply each element by it 
+			-> the dot product is the component of one vector in the direction of the other 
+
+	-> matrices 
+		-> definition and representation
+			-> arrays of numbers in rows and columns 
+			-> these are used for linear transformations / for solving linear systems of simultaneous equations
+			-> there is a certain notation for this, [a_ij] <- row i, column j 
+
+		-> operations 
+			-> if you add two matrices, you are doing this element-wise 
+			-> this is the same with timing the entire thing by a constant 
+			-> matrix multiplication is more complicated and there is a more algorithmic approach of doing this by hand 
+				-> this is for solving systems of linear equations 
+				-> times A and B together, if A is m by p and B is d by e then the result of A times B is m by e (the two elements on the outside) 
+
+		-> systems of linear equations 
+			-> simultaneous equations can be put into a matrix equation
+			-> the vector in this is called the "vector of unknowns"
+			-> this is the vector which contains the x, y's etc - for the simultaneous equations and is what we want to solve for 
+
+			-> methods to solve for this vector 
+				-> gaussian elimination <- this solves for the vector of unknowns by transforming the augmented matrix into row echelon form 
+				-> matrix inversion <- taking the inverse matrix and multiplying both sides of the equation by it 
+
+				-> vector spaces and span
+					-> this is how vectors form vector spaces 
+					-> this is done over addition and scalar multiplication 
+					-> the span of vectors is all of the possible linear combinations of these vectors 
+					-> these vectors are independent 
+
+				-> applications 
+					->  this is used across Physics, engineering, computer science, data science and economics
+					-> for modelling relationships that involve linear relationships <- optimisation, signal processing, image processing and machine learning 
+
+		-> numpy 
+			-> arrays 
+				-> this allows for faster numerical operations, compared to lists 
+				-> these are created using the np.array() method
+				-> alternatively, standard arrays can be made using np.zeros() or np.ones()
+
+			-> array indexing 
+				-> arrays can be indexed and sliced, as can lists  
+				-> the shapes for these can be found using the .shape method, for which there exist no arguments 
+
+			-> operations 
+				-> element-wise operations <- adding, subtracting, multiplying and dividing arrays 
+				-> universal functions <- ufuncs 
+					-> functions that operate element-wise on arrays 
+					-> these include np.sin(), np.cos() and np.exp()
+
+		-> matrix operations 
+			-> matrix multiplication 
+				-> this is done using the np.matmul() method 
+				-> alternatively, the @ operator 
+				-> the dimensions of the matrices being multiplied have to be compatible 
+
+			-> linear algebra functions 
+				-> transpose 
+					-> this is calculated with the np.transpose() method
+					-> .T can also be used for this
+
+				-> inverse 
+					-> the inverse of a matrix is calculated using the np.linalg.inv() method 
+					-> this is for solving systems of linear equations and other matrix operations
+
+		-> scalar operations 
+			-> salary multiplication and division 
+				-> dividing arrays by scalars 
+				-> these operations are done element-wise across the array 
+
+			-> dot product 
+				-> this is calculated using np.dot(u, v) <- the .dot() method 
+				-> or the @ operator 
+				-> the sum of the products of corresponding entries in two vectors 
+
+		-> special matrices 
+			-> identity 
+				-> the identity matrix is initialised using the np.eye(n) method  
+				-> this is a square matrix 
+
+			-> zeroes and ones 
+				-> these are initialised using the np.zeros((m, n)) and np.ones((m, n)) methods 
+				-> this can be used to generate blank matrices for operations 
+
+		-> applications 
+			-> methods 
+				-> (np.linalg.norm()) <- norms 
+				-> (np.linalg.solve()) <- to solve linear systems of equations using matrix multiplication 
+				-> np.linalg.eig() <- to perform eigenvalue decomposition 
+				-> np.linalg.svd() <- to perform singular value decomposition 
+
+			-> applications of said methods  
+				-> scientific computing 
+				-> machine leanring algorithms 
+				-> optimisation problems 
+				-> engineering and data analysis 
+				-> linear algebra concepts 
+				-> the NumPy library  
+				-> data analysis
+				-> engineering
+				-> modelling and solving complex problems

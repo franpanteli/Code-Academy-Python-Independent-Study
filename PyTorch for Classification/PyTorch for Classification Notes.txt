@@ -1,0 +1,924 @@
+Introduction to classification in PyTorch
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+-> purpose 
+	-> neutral netowrks for classification tasks 
+	-> building and training these networks
+	-> for classification tasks 
+	-> categorical data
+	-> computing loss using cross entropy 
+	-> activation functions 
+	-> computing performance using accuracy and F1 scores 
+
+-> types of classification 
+	-> binary classification <- models with two outputs (pass or fail)
+	-> multi class classification <- models with more than two possible outputs 
+
+-> prerequisites
+	-> PyTorch for regression tasks 
+	-> machine learning concepts <- train-test splits, gradient descent 
+
+Practical Example with Sample Data
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+-> provided code and initial setup 
+	-> importing libraries 
+	-> feeding synthetic data into a model 
+	-> we are predicting the probability of passing a course 
+
+-> input features 
+	-> for this example, weekly_hours_studying is an input feature <- categorical values for the hours studied per week 
+	-> note taking <= values representing the frequency of taking notes 
+	-> study_alone <- a boolean 
+
+-> using the model 
+	-> the input features get converted into a PyTorch tensor 
+	-> a model is then loaded and evaluated
+	-> then a prediction function computes the probability of passing based on the model's output 
+
+Encoding Categorical Data
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+-> taking categorical data and converting it into numerical data for training models with 
+-> the importance of encoding 
+	-> neural networks require numeric inputs <- they can't take categorical data 
+	-> label encoding and one-hot encoding is used for this 
+
+-> label encoding 
+	-> mapping categories directly to numbers 
+	-> this is suitable for categories where the order matters 
+	-> for example, grades
+
+-> one-hot encoding 
+	-> this is for creating binary columns with each category 
+	-> for unordered categories 
+	-> this results in three new columns 
+
+Checkpoints and Exercises
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%​
+
+-> importing the pandas library 
+	-> import pandas as pd
+-> then labelling encode-binary columns in the data fame 
+-> replacing "yes" with 1 and "no" with 0 in the columns 
+-> one-hot encoding the MT1_Preparation column
+-> then using pd.get_dummies() to create binary columns for each category in MT1_Preparation
+	-> converting categorical into numerical data, so the model can be trained 
+
+Code Examples
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%​
+
+-> DataFrame creation 
+
+df = pd.DataFrame({'Student_ID': [1, 2, 3, 4, 5], 
+                   'Letter_Grade': ['A', 'C', 'F', 'B', 'D'],
+                   'Outcome': ['Passed', 'Passed', 'Failed', 'Passed', 'Failed']})
+	-> this creates a pandas dataframe for the different information to train the model on
+
+-> Label encoding 
+
+df['Letter_Grade'] = df['Letter_Grade'].replace({'A': 4, 'B': 3, 'C': 2, 'D': 1, 'F': 0})
+df['Outcome'] = df['Outcome'].replace({'Passed': 1, 'Failed': 0})
+	-> replacing the letters with numbers so that a model can be trained 
+	-> we are using the .replace() method for this
+
+-> One-Hot encoding 
+	-> DataFrame creation 
+
+df = pd.DataFrame({'Student_ID': [1, 2, 3, 4, 5], 
+                   'High_School_Type': ['State', 'Private', 'Other', 'State', 'State']})
+		-> this creates a pandas dataframe, so that a machine learning model can be trained on it before it is processed 
+
+	-> One-Hot encoding 
+
+df = pd.get_dummies(df, columns=['High_School_Type'], dtype=int)
+		-> the .get_dummies() method converts categorical data into numerical data, using one-hot encoding 
+		-> this is stored in the `df` variable, so that a machine learning model can be trained 
+
+-> detailed step-by-step execution 
+	-> importing pandas 
+
+import pandas as pd
+		-> pandas is imported 
+
+	-> label encoding binary columns 
+
+df = pd.DataFrame({'Student_ID': [1, 2, 3, 4, 5],
+                   'Additional_Work': ['Yes', 'Yes', 'No', 'Yes', 'No'],
+                   'Regular_Artistic_or_Sports': ['No', 'Yes', 'Yes', 'No', 'No'],
+                   'Has_Partner': ['No', 'Yes', 'No', 'Yes', 'Yes']})
+			-> this creates a dataframe with binary categorical data 
+			-> the data isn't just numbers, so we can't train a machine learning model on it 
+
+binary_columns = ['Additional_Work', 'Regular_Artistic_or_Sports', 'Has_Partner']
+for col in binary_columns:
+    df[col] = df[col].replace({'Yes': 1, 'No': 0})
+		-> this encodes the columns 
+		-> we have converted the categorical data into numerical data, so that a machine learning model can be trained on it 
+
+	-> one-hot encoding a column 
+df = pd.DataFrame({'Student_ID': [1, 2, 3, 4, 5],
+                   'MT1_Preparation': ['Alone', 'Alone', 'With Friends', 'Alone', 'Not Applicable']})
+		-> this creates a dataframe with a categorical column for preparation methods 
+
+df = pd.get_dummies(df, columns=['MT1_Preparation'], dtype=int)
+		-> then applying on-hot encoding 
+		-> this is again to convert the categorical data to numerical data, so that a machine learning model can be trained 
+
+Summary of This 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%​
+
+-> data preparation <- the data which is used in the following examples will already be processed
+	-> a student dataset 
+-> classification concepts using PyTorch 
+-> how to prepare data through encoding techniques and how to apply these techniques 
+-> creating and training neural networks for classification tasks 
+
+Checkpoints To Implement This 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%​
+
+-> using PyTorch to create a neutral network and calculate its losses
+-> implementing the modified neural network with new weights 
+	-> defining a sigmoid function 
+	-> then implementing the. Modified neural network 
+	-> we are including the new weights and the GPA input feature with this 
+
+import math
+
+# Define sigmoid function
+def sigmoid(x):
+    return 1 / (1 + math.exp(-x))
+
+# Define inputs for the student
+studies = 1.0  # student studies
+notes = 0.0  # student does not take notes
+gpa = 3.0  # student has a GPA of 3.0
+
+# Define the weights for each input feature
+weight_studies = -5.0
+weight_notes = -4.0
+weight_gpa = 2.2
+
+# Calculate the weighted sum
+weighted_sum = (weight_studies * studies) + (weight_notes * notes) + (weight_gpa * gpa)
+
+# Apply the sigmoid activation function
+predicted_probability = sigmoid(weighted_sum)
+
+# Set the classification threshold
+threshold = 0.50
+classification = int(predicted_probability >= threshold)
+
+# Print the results
+print("Probability:", predicted_probability)
+print("Classification:", classification)
+
+	-> (above)
+		-> import modules 
+		-> then defining a function which stores the equation for a sigmoid function 
+			-> this is an activation function 
+
+		-> then defining the inputs for the function and the weights for the neural network 
+			-> each feature in the model has its own weights 
+			-> then calculating the weighted sum of this and applying the sigmoid function 	
+
+		-> then setting the classification threshold for this and printing the results 
+
+-> adjusting the threshold to 0.85
+	-> changing the threshold in the model and re-running the calculations to see how the outputs it comes out with change 
+
+# Set the new threshold
+threshold = 0.85
+classification = int(predicted_probability >= threshold)
+
+# Print the results
+print("Probability:", predicted_probability)
+print("Classification:", classification)
+
+		-> (above)
+			-> the value of the threshold in the variable has changed 
+			-> converting this to an integer and printing the results 
+
+-> adding a sigmoid activation function in PyTorch sequential model 
+	-> using PyTorch to implement the neural network with a Sigmoid activation function 
+	-> code 
+
+import torch
+from torch import nn
+
+# Define the model
+model = nn.Sequential(
+    nn.Linear(3, 1),
+    nn.Sigmoid()
+)
+
+# Print the model to verify the layers
+print(model)
+
+		-> (above)
+			-> importing modules 
+			-> then defining the model and setting this equal to a variable 
+			-> this is done using the .Sequential method 
+			-> then printing this 
+
+Binary Cross-Entropy Loss Calculation
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%​
+
+-> determining the True classification with low BCELoss 
+-> if the BCELoss is relatively low, this means that the true classification is likely 1 
+
+y = 1  # Uncomment this line
+# y = 0  # Comment this line
+
+-> the BCELoss can be calculated for different probabilities and actual classifications 
+	-> PyTorch can be used to calculate this loss for the given probability and classification 
+	-> code for this 
+
+import torch
+from torch import nn
+
+# Create an instance of BCELoss
+loss = nn.BCELoss()
+
+# Create tensors for the probability and actual classification
+p = torch.tensor([0.7], dtype=torch.float)
+y = torch.tensor([0], dtype=torch.float)
+
+# Compute the BCELoss
+loss_value = loss(p, y)
+
+# Print the result
+print("BCELoss:", loss_value.item())
+
+	-> (above)
+		-> importing modules 
+		-> then calculating the BCELoss, using the BCELoss() method for this and storing the result in the `loss` variable 
+
+		-> then creating tensors for the probability and actual classification 
+			-> these are arrays which will store the probability that the datapoint is a specific outcome, and another for how accurate this actually is
+
+		-> calculating the BCELoss for this 
+			-> the loss() method is then used, to calculate the BCELoss for this 
+			-> this is a way of telling how accurate the predictions this produces are and is then printed 
+
+-> then calculating the BCELoss for p = 0.5 with y = 1 and y = 0
+	-> we then want to calculate the BCELoss for different values with the model 
+	-> this is for a 50/50 prediction with both classifications 
+	-> code for this
+
+# Create tensors for the probability and actual classification
+p = torch.tensor([0.5], dtype=torch.float)
+y1 = torch.tensor([1], dtype=torch.float)
+y0 = torch.tensor([0], dtype=torch.float)
+
+# Compute the BCELoss for both cases
+loss1 = loss(p, y1)
+loss0 = loss(p, y0)
+
+# Print the results
+print("BCELoss for p=0.5, y=1:", loss1.item())
+print("BCELoss for p=0.5, y=0:", loss0.item())
+
+	-> (above)
+		-> tensors for the probability and actual classification are generated
+		-> these are effectively arrays
+		-> we are comparing the predicted results to the actual classifications for the model 
+		-> the BCELoss is then calculated for both cases 
+			-> this is again done using the loss() method 
+		-> these two results are then printed, so we can compare the outcomes from the models in these two cases 
+			-> the BCELoss of the model is the same for both values of y 
+			-> this shows the uncertainty of the model's prediction for this
+
+-> final code 
+	-> this is the final code which combines all of the parts above 
+
+# Checkpoint 1: Implementing the Modified Neural Network
+import math
+
+def sigmoid(x):
+    return 1 / (1 + math.exp(-x))
+
+studies = 1.0
+notes = 0.0
+gpa = 3.0
+
+weight_studies = -5.0
+weight_notes = -4.0
+weight_gpa = 2.2
+
+weighted_sum = (weight_studies * studies) + (weight_notes * notes) + (weight_gpa * gpa)
+predicted_probability = sigmoid(weighted_sum)
+
+threshold = 0.50
+classification = int(predicted_probability >= threshold)
+
+print("Checkpoint 1")
+print("Probability:", predicted_probability)
+print("Classification:", classification)
+
+# Checkpoint 2: Adjusting the Threshold to 0.85
+threshold = 0.85
+classification = int(predicted_probability >= threshold)
+
+print("Checkpoint 2")
+print("Probability:", predicted_probability)
+print("Classification:", classification)
+
+# Checkpoint 3: Adding Sigmoid Activation in PyTorch Sequential Model
+import torch
+from torch import nn
+
+model = nn.Sequential(
+    nn.Linear(3, 1),
+    nn.Sigmoid()
+)
+
+print("Checkpoint 3")
+print(model)
+
+# BCELoss Calculation
+import numpy as np
+
+def BCELoss(p, y):
+    if y == 1:
+        return -np.log(p)
+    else:
+        return -np.log(1 - p)
+
+# Checkpoint 1: Determining True Classification with Low BCELoss
+y = 1  # Low BCELoss indicates true classification is likely 1
+
+# Checkpoint 2: Computing BCELoss for p=0.7 and y=0
+p = torch.tensor([0.7], dtype=torch.float)
+y = torch.tensor([0], dtype=torch.float)
+loss = nn.BCELoss()
+loss_value = loss(p, y)
+
+print("Checkpoint 2")
+print("BCELoss:", loss_value.item())
+
+# Checkpoint 3: BCELoss for p=0.5 with y=1 and y=0
+p = torch.tensor([0.5], dtype=torch.float)
+y1 = torch.tensor([1], dtype=torch.float)
+y0 = torch.tensor([0], dtype=torch.float)
+
+loss1 = loss(p, y1)
+loss0 = loss(p, y0)
+
+print("Checkpoint 3")
+print("BCELoss for p=0.5, y=1:", loss1.item())
+print("BCELoss for p=0.5, y=0:", loss0.item())
+
+	-> (above)
+		-> importing modules
+		-> defining a sigmoid function
+		-> initialising values
+		-> defining another function for the weighted sum 
+		-> another for threshold and classification 
+		-> then printing the values from / for this
+		-> repeating this process for a different activation function 
+		-> we are using a .Sequential method for this 
+		-> then calculating the BCELoss for this, to compare the results from the different methods 
+		-> then printing these and comparing them 
+
+Computing the Accuracy of the Model
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%​
+
+-> calculating the accuracy for a given set of conditions 
+	-> we have multiple different students (5 of them)
+	-> each student is represented by a datapoint, and either they passed or failed
+	-> there is the result which they actually got, and then there is the predicted result 
+	-> code
+
+correct = 2
+total = 5
+accuracy = correct / total
+
+print(accuracy)  # Should print 0.4
+
+		-> (above)
+			-> calculating an accuracy score <- the predictions vs actual results 
+
+-> then defining and training the neural network 
+	-> code 
+
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from sklearn.metrics import accuracy_score
+
+# Set a random seed - do not modify
+torch.manual_seed(42)
+
+# Define the model using nn.Sequential
+model = nn.Sequential(
+    nn.Linear(55, 110),  # 55 is the number of input features in X_train
+    nn.ReLU(),
+    nn.Linear(110, 55),
+    nn.ReLU(),
+    nn.Linear(55, 1),  # one output node for binary classification
+    nn.Sigmoid()  # sigmoid activation to output probabilities
+)
+
+# initialize the BCE loss function
+loss = nn.BCELoss()
+
+# initialize SGD optimizer, with a learning rate of .001
+optimizer = optim.SGD(model.parameters(), lr=0.001)
+
+# set the number of epochs to 300
+num_epochs = 300
+
+for epoch in range(num_epochs):
+    # Add forward pass here, keep the variable name predictions
+    predictions = model(X_train)
+
+    # Compute BCELoss loss here
+    BCELoss = loss(predictions, y_train)
+
+    # Compute gradients here
+    BCELoss.backward()
+
+    # Update weights and biases here
+    optimizer.step()
+
+    # Reset the gradients for the next iteration here
+    optimizer.zero_grad()
+
+    # DO NOT MODIFY
+    # keep track of the accuracy and loss during training
+    if (epoch + 1) % 100 == 0:
+        predicted_labels = (predictions >= 0.5).int()
+        accuracy = accuracy_score(y_train, predicted_labels)
+        print(f'Epoch [{epoch+1}/{num_epochs}], BCELoss: {BCELoss.item():.4f}, Accuracy: {accuracy:.4f}')
+
+		-> (above)
+			-> importing modules 
+			-> setting a random seed 
+			-> then defining the model 
+				-> this is done using the .sequential() method 
+				-> a linear model with a ReLu function and Sigmoid activation function 
+			-> initialing a BCE loss function 
+				-> this was previously mentioned
+				-> then initialising the optimiser for this 	 		
+				-> this is done using the .SGD() method 
+			-> the number of epochs is then defined and iterated through 
+				-> for each of these, predictions are made
+				-> this is done using the model() method
+			-> the BCELoss is then calculated, using the loss() method
+			-> the gradients from this are calculated, using the .backward() method 
+			-> the weights are then updated, using the .step() method 
+			-> the gradients are then reset, using the zero_grad() method
+			-> the accuracy and loss during the training are kept track of while doing thiS
+				-> this is done using an if block in the code 
+
+-> changing the learning rate of the model and seeing if its accuracy increases 
+	-> code 
+
+# Set a random seed - do not modify
+torch.manual_seed(42)
+
+# Define the model using nn.Sequential
+model = nn.Sequential(
+    nn.Linear(55, 110),
+    nn.ReLU(),
+    nn.Linear(110, 55),
+    nn.ReLU(),
+    nn.Linear(55, 1),
+    nn.Sigmoid()
+)
+
+# initialize the BCE loss function
+loss = nn.BCELoss()
+
+# initialize SGD optimizer, with a learning rate of .01
+optimizer = optim.SGD(model.parameters(), lr=0.01)
+
+# set the number of epochs to 300
+num_epochs = 300
+
+for epoch in range(num_epochs):
+    # Add forward pass here, keep the variable name predictions
+    predictions = model(X_train)
+
+    # Compute BCELoss loss here
+    BCELoss = loss(predictions, y_train)
+
+    # Compute gradients here
+    BCELoss.backward()
+
+    # Update weights and biases here
+    optimizer.step()
+
+    # Reset the gradients for the next iteration here
+    optimizer.zero_grad()
+
+    # DO NOT MODIFY
+    # keep track of the accuracy and loss during training
+    if (epoch + 1) % 100 == 0:
+        predicted_labels = (predictions >= 0.5).int()
+        accuracy = accuracy_score(y_train, predicted_labels)
+        print(f'Epoch [{epoch+1}/{num_epochs}], BCELoss: {BCELoss.item():.4f}, Accuracy: {accuracy:.4f}')
+
+		-> (above)
+			-> this is the same code as before, just with a different learning rate
+			-> this has been changed, to see if the accuracy of the model is altered by doing this
+
+-> increasing the number of epochs to 1,000 and re-running the training loop 
+	-> code 
+
+# Set a random seed - do not modify
+torch.manual_seed(42)
+
+# Define the model using nn.Sequential
+model = nn.Sequential(
+    nn.Linear(55, 110),
+    nn.ReLU(),
+    nn.Linear(110, 55),
+    nn.ReLU(),
+    nn.Linear(55, 1),
+    nn.Sigmoid()
+)
+
+# initialize the BCE loss function
+loss = nn.BCELoss()
+
+# initialize SGD optimizer, with a learning rate of .01
+optimizer = optim.SGD(model.parameters(), lr=0.01)
+
+# set the number of epochs to 1000
+num_epochs = 1000
+
+for epoch in range(num_epochs):
+    # Add forward pass here, keep the variable name predictions
+    predictions = model(X_train)
+
+    # Compute BCELoss loss here
+    BCELoss = loss(predictions, y_train)
+
+    # Compute gradients here
+    BCELoss.backward()
+
+    # Update weights and biases here
+    optimizer.step()
+
+    # Reset the gradients for the next iteration here
+    optimizer.zero_grad()
+
+    # DO NOT MODIFY
+    # keep track of the accuracy and loss during training
+    if (epoch + 1) % 100 == 0:
+        predicted_labels = (predictions >= 0.5).int()
+        accuracy = accuracy_score(y_train, predicted_labels)
+        print(f'Epoch [{epoch+1}/{num_epochs}], BCELoss: {BCELoss.item():.4f}, Accuracy: {accuracy:.4f}')
+
+		-> (above) 
+			-> this is the same code as before, just with a different number of epochs 
+			-> the number of epochs here have been changed, to see if the accuracy of the model increases 
+
+-> evaluation 
+	-> evaluating the model on the testing set, by calculating its accuracy, prediction and F1 score
+	-> code 
+
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+
+# Evaluate on the testing set
+model.eval()  # set model to evaluation mode
+
+with torch.no_grad():  # turn off gradients
+    test_predictions = model(X_test)
+
+# Convert probabilities to binary outputs
+test_predicted_labels = (test_predictions >= 0.5).int()
+
+# Compute evaluation metrics
+test_accuracy = accuracy_score(y_test, test_predicted_labels)
+test_precision = precision_score(y_test, test_predicted_labels)
+test_recall = recall_score(y_test, test_predicted_labels)
+test_f1 = f1_score(y_test, test_predicted_labels)
+
+print(f'Test Accuracy: {test_accuracy:.4f}')
+print(f'Test Precision: {test_precision:.4f}')
+print(f'Test Recall: {test_recall:.4f}')
+print(f'Test F1 Score: {test_f1:.4f}')
+
+		-> (above)
+			-> this evaluates the model on the test set and runs its metrics for this
+			-> we import modules 
+			-> then turning off the gradients for the model 
+			-> then converting probabilities to binary outputs 
+			-> testing the accuracy of the model with precision scores 
+				-> recall scores 
+				-> test predicted labels / accuracy 
+			-> test precision / recall  
+
+Multiclass Classification and Implementation in PyTorch
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%​
+
+-> background 
+	-> multi class classification 
+		-> we want to classify the inputs into three or more classes
+		-> binary classification has two categories 
+
+	-> student note-taking behaviour example 
+		-> categories
+			-> students who always take notes
+			-> students who almost always take notes
+			-> students who sometimes take notes
+			-> students who never take notes
+
+		-> we want to have a student and input information about them into the model
+			-> we want the model to then be able to predict which category the student lies in, based on this
+
+		-> constructing a model 
+			-> this is a neural network 
+			-> this is made using PyTorch 
+			-> there are multiple layers in this model 
+			-> the final layer contains information about the probability that the student falls into any of those different categories 
+			-> code 
+
+import torch
+from torch import nn
+
+# Set a random seed for reproducibility
+torch.manual_seed(42)
+
+# Define the model using nn.Sequential
+model = nn.Sequential(
+    nn.Linear(5, 110),  # Input layer with 5 features and 110 neurons
+    nn.ReLU(),          # ReLU activation function
+    nn.Linear(110, 55), # Hidden layer with 55 neurons
+    nn.ReLU(),          # ReLU activation function
+    nn.Linear(55, 4)    # Output layer with 4 neurons (one for each class)
+)
+
+				-> (above)
+					-> we are making a neural network for the model, using the .Sequential() method 
+					-> this has a linear input layer, which has 5 features 
+					-> then two hidden layers, which use an ReLu activation function to transform the data 
+					-> the number of neurones in the output layer corresponds to the probability that the student which was input into the model belongs to either of those categories 
+					-> it's like quantum mechanics, but with neural networks 
+
+		-> the softmax function for output normalisation 
+			-> we want the probabilities that the student is in each of the different categories to sum to 1 
+			-> this is achieved using the softmax function 
+			-> this normalises the data, to make sure that it sums to 1 
+
+			-> the different stages of calculating this 
+				-> if we have an array of values 
+				-> calculating e^(each of those values)
+				-> then summing them up 
+				-> then dividing each of these values by the normalisation factor for this 
+				-> this converts this into probabilities 
+
+			-> code to do this manually 
+
+import numpy as np
+
+# Raw outputs
+logits = np.array([0.9, 0.8, 0.4])
+
+# Exponentiate the logits
+exp_logits = np.exp(logits)
+
+# Calculate the normalization factor
+normalization_factor = np.sum(exp_logits)
+
+# Calculate the softmax probabilities
+softmax_output = exp_logits / normalization_factor
+
+				-> (above)
+					-> importing modules 
+					-> we have an array with data 
+					-> taking the exponential of this 
+					-> then normalising it into probabilities 
+					-> softmax is about normalising the data into probabilities 
+
+		-> normalising outputs without doing this manually 
+			-> PyTorch has builtin functions
+			-> this has built-in softmax in its cross-entropy loss function 
+			-> this normalises the outputs of the model during training 
+			-> code 
+
+raw_output = torch.tensor([
+    [0.1320, 0.0160, 0.9614, 0.9919],  # Student 1
+    [0.7180, 0.7303, 0.6234, 0.1197],  # Student 2
+    [0.8757, 0.2045, 0.1977, 0.3845],  # Student 3
+    [0.8934, 0.5677, 0.1377, 0.6420],  # Student 4
+    [0.4017, 0.8363, 0.1119, 0.6557]   # Student 5
+], dtype=torch.float)
+
+				-> (above)
+					-> this is an array, an each of its elements is a student which we want to clarify 
+					-> this includes a softmax / normalisation function 
+					-> this is created with the .tensor() method <- it's a glorified array 
+
+			-> identifying predicted labels 
+				-> code 
+argmax_output = torch.argmax(raw_output, dim=1)
+tensor([3, 1, 0, 0, 1])
+
+				-> (above)
+					-> the .argmax() argument identifies the highest score in the previous tensor 
+					-> this returns a tensor 
+					-> each of the elements in this is the probability that the student falls into the category represented by that element in the array  
+					-> these elements are different labels in the model (the categories)
+
+			-> summary 
+				-> model setup <- the model is setup with an input layer, hidden layers and an output layer 
+					-> input features map to neurones in the model
+					-> we use the ReLu activation function for this, because it is non-liner 
+					-> the elements in the output layer represent the different categories which the student might have fallen into 
+
+				-> the softmax function 
+					-> this is for normalising data
+					-> we are converting raw test scores into probabilities, so that they sum to 1
+					-> normalising the data like this means that the output of the model is in terms of probabilities 
+
+				-> raw output processing 
+					-> the torch.argmax method can be used too convert the output array of neurones into a prediction for the class which that student falls into in the model 
+					-> each row corresponds to a student for this, and each column to a class 
+
+				-> result interpretation 
+					-> [3, 1, 0, 0, 1] <- this is an example output from this model 
+					-> each of the elements in this is the output prediction from one student 
+					-> the class that they fall into in the model 
+
+				-> practical considerations 
+					-> softmax in training <- CrossEntropyLoss and normalising outputs for stable training 
+					-> argmax for prediction <- this identifies the highest scoring class 
+						-> there are multiple different classes which the student can fall into 
+						-> we calculate the probability of each of these, and then use this method to select the highest probability 
+						-> this is the prediction that the model comes out with 
+				
+				-> this is for a multi class classification Python model using PyTorch 
+				-> defining the network and interpreting the predictions from this
+
+Multiclass Classification and Implementation in PyTorch
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%​
+
+-> training a multiclass classification model using PyTorch 
+	-> it's a machine learning model, and there are multiple different classes which students can fall into 
+	-> we are classifying student performances into three categories, based on their final grades
+	-> we give the model the grades of a student, and either it categorises that student into below average, average or above average 
+
+-> process in the code 
+
+	-> importing modules and loading data
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+import numpy as np
+import pandas as pd
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, classification_report
+
+# Load dataset
+df = pd.read_csv("student_performances_encoded.csv")
+
+		-> (above)
+			-> modules are first imported 
+			-> the data is then loaded into the notebook, using the .read_csv() method 
+			-> this csv file is effectively a spreadsheet, which contains the data we want to train and test the model on for the students 
+
+	-> preparing the data 
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+# Define input features
+remove_cols = ['Student_ID', 'Letter_Grade', 'Outcome', 'Performance_Outcome']
+train_features = [x for x in df.columns if x not in remove_cols]
+
+# Create input feature tensor X
+X = torch.tensor(df[train_features].values, dtype=torch.float)
+
+# Create target label tensor y
+y = torch.tensor(df['Performance_Outcome'].values, dtype=torch.long)
+
+# Split data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.8, test_size=0.2, random_state=42)
+
+
+		-> (above)
+			-> the data has to be prepared before the model can be trained 
+			-> this involves first removing columns which we don't need 
+				-> we are only predicting where the student's grades lie relative to the rest of them 
+				-> the columns which we don't need are listed out in the first variable (remove_cols), and then removed from the set in the variable train_features 
+
+			-> then initialising tensors to train the model on  
+				-> the .tensor() method is first initialised to store input features for the model 
+				-> this method is then used again to create a target label for the tensor
+
+			-> this has allowed us to select columns for input features (x) and target labels (y)
+
+			-> the data is then split into training and test sets 
+				-> we have x and y 
+				-> each of these has a train and test 
+				-> this means we end up with four arrays for this
+					-> these are created using the train_test_split method, so we can control the relative proportion of data in each of those sets
+
+	-> initialising the architecture of the model
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+# Define the neural network architecture
+model = nn.Sequential(
+    nn.Linear(len(train_features), 240),
+    nn.ReLU(),
+    nn.Linear(240, 110),
+    nn.ReLU(),
+    nn.Linear(110, 3)  # 3 output classes: Below Average, Average, Above Average
+)
+
+		-> (above)
+			-> we then initialise the model architecture 
+			-> the model architecture is setup using the .Sequential() model 
+			-> this has three linear layers and ReLU activation layers
+			-> the output layer of the model has three nodes, each of which represents the possibility that the student will be in said class
+			-> so we have the cleaned data which is now in training and test splits for x and y, and a neutral network which we want to train on this data
+
+# Loss function
+loss = nn.CrossEntropyLoss()
+
+# Optimizer
+optimizer = optim.SGD(model.parameters(), lr=0.01)
+
+		-> (above)
+			-> this code defines a loss function and optimiser before training the model 
+			-> the .CrossEntropyLoss() method is first used for this, and then the .SGD() method
+
+	-> training the model
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+# Training the model
+num_epochs = 1000
+for epoch in range(num_epochs):
+    # Forward pass
+    predictions = model(X_train)
+    
+    # Calculate loss
+    CELoss = loss(predictions, y_train)
+    
+    # Backward pass and optimization
+    optimizer.zero_grad()
+    CELoss.backward()
+    optimizer.step()
+    
+    # Print training statistics every 100 epochs
+    if (epoch + 1) % 100 == 0:
+        predicted_labels = torch.argmax(predictions, dim=1)
+        accuracy = accuracy_score(y_train, predicted_labels)
+        print(f'Epoch [{epoch+1}/{num_epochs}], CELoss: {CELoss.item():.4f}, Accuracy: {accuracy.item():.4f}')
+
+		-> (above)
+			-> we are now training the model 
+			-> the number of epochs are first defined <- the number of times the model is trained on all of the data 
+				-> we have a dataset, and we are training the model on the entire thing 1,000 times (here)
+				-> if this is too high, then the model can be overfitted
+			-> these epochs are then iterated through <- each iteration is a case where the model is trained on the same dataset 
+			-> a variable to contain the different predictions for this is first defined, along with a variable for the loss 
+				-> this is created with the loss() method 
+			-> the training statistics for this are printed every 100 times the model is trained on the data
+			-> a summary of these steps 
+				-> the epochs are looped through 
+				-> backpropagation is then performed 
+				-> the weights of the model are updated, using an SGD optimiser 
+					-> stochastic gradient descent
+
+	-> testing the model
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+# Evaluate the model on the test set
+model.eval()  # Set model to evaluation mode
+with torch.no_grad():
+    predictions = model(X_test)
+    predicted_labels = torch.argmax(predictions, dim=1)
+    accuracy = accuracy_score(y_test, predicted_labels)
+    report = classification_report(y_test, predicted_labels)
+
+# Print evaluation results
+print(f'Accuracy: {accuracy.item():.4f}')
+print(report)
+
+		-> (above)
+			-> the trained model is then tested
+			-> this involves evaluating the model on the test set
+			-> the trained model is first converted into evaluation mode, using .eval()
+			-> the model() is then applied to the test data, to produce arrays of predictions 
+				-> the prediction from each of these cases is the node which has the maximal probability in the output array from this 
+				-> this is determined using the .argmax() method 
+
+			-> the accuracy of these predictions is then determined 
+				-> the accuracy score for this is then generated, using the accuracy_score() method 
+				-> a classification report is also generated from the predictions this made, using the classification_report() method
+
+			-> these results are then printed 
+				-> this is done using an f string literal
+				-> the .4f method is used to round the outputs to 4 significant figures 
+				-> the classification report from this is then also returned, so we can see how accurate the predictions from the model are 
+
+			-> a summary of these steps 
+				-> the model is evaluated on the test set
+				-> the accuracy of the model is then calculated 
+				-> a classification report is then generated for this
+				-> this allows us to train a multi class classification model with PyTorch, with loss functions and metrics  

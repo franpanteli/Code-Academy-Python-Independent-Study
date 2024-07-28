@@ -1,0 +1,202 @@
+-> connect four project
+	-> this is an open-ended Python project
+	-> there are many solutions to the same problem / ways of getting the same answer 
+
+	-> creating the board 
+		-> aims 
+			-> we want to represent a connect four game as a data structure 
+			-> and then to display the board to the user 
+			-> this should print in the terminal 
+
+		-> representation of the board 
+			-> we need to choose a suitable data structure for the board <- a list of lists 
+			-> this is for a 6x7 board 
+			-> we want to initialise the value of each cell on this board to `None`
+				-> this is the same as an empty string 
+			-> this can be created using a for look in one line
+				-> board = [[None for _ in range(7)] for _ in range(6)]
+				-> for the numbers 1 to 6 or from 1-7 
+
+		-> display 
+			-> creating a function to print the board 
+			-> this function will iterate through the lists of lists and print each cell 
+			-> the list of lists was previously initialised, to hold the elements of the board 
+			-> we want the columns to be labelled with 1-7 while doing this 
+			-> X and O on this board will represent the pieces for the player's choices 
+
+def print_board(board):
+    print(" 1  2  3  4  5  6  7")
+    for row in board:
+        print("|".join([" " if cell is None else cell for cell in row]))
+        print("-" * 29)
+
+			-> (above)
+				-> this is the function which prints the board 
+				-> we are printing the elements 1-7
+				-> this involves lists and nested lists, to create the board representation 
+				-> looping through the elements 
+
+			-> acceptance criteria for this 
+				-> we are making a connect 4 grid 
+				-> this is a 7x6 grid that can be edited to add pieces 
+				-> we also want a display function for this 
+					-> this is a nested loop to print the board values in the correct order 
+					-> so this includes elements like column numbers and borders 
+
+	-> interacting with the board 
+		-> aims 
+			-> we want to add logic for placing pieces on the board and handling interactions 
+			-> we want to allow users to place pieces in specific columns  
+			-> and then to have error handling if there is a full column or the user tries to enter an invalid element into the columns
+
+		-> refactoring 
+			-> we want to move the board display logic into a function 
+			-> we have a function which displays the board, we want to alter this so that we can add and move elements around on the board 
+				-> and so that this function also includes error handling, for the cases that the project aims describe 
+
+		-> functionality 
+			-> we are creating a new function for the functionality of the board
+			-> we have one function which initialises the existance of the board altogether 
+			-> then we want to define another one which affects how the pieces show up on it 
+			-> this is the select_space function, to place a piece in a specific column 
+			-> we want this piece to "fall" to the lowest available row in the column 
+			-> we first. Have to check that we have a valid column number and that the column the piece is being entered into isn't full 
+
+def select_space(board, column, piece):
+    if column < 1 or column > len(board[0]):
+        print("Invalid column!")
+        return False
+    for row in reversed(board):
+        if row[column - 1] is None:
+            row[column - 1] = piece
+            return True
+    print("Column is full!")
+    return False
+
+			-> we are first making sure the column on the board we want to enter the piece into is a valid one 
+				-> this is done using an if block 
+			-> then checking that the column isn't already full 
+
+		-> acceptance criteria for this  
+			-> then creating a drop piece function 
+			-> there are a series of different functions which we can define 
+				-> setting up the display of the board, then the different elements 
+				-> then dropping those elements in
+			-> this function allows elements to drop to the first available row in the specified column 
+			-> we are ensuring that the function checks for and handles full columns and invalid columns numbers  
+
+	-> determining the winner and playing the game 
+		-> aims 
+			-> we are implementing logic, to determine when the game is over
+			-> then creating a loop, to handle player turns until the game ends
+			-> we want new functions, to check is the player has won the game or if it is a tie 
+			-> we want a game loop for this, so that the game will be continuously played until a game-ending condition is met 
+
+		-> winning conditions 
+			-> we want the functions to be in a loop, until one of the players win and a game-ending condition is met
+			-> we are defining a condition to check the winner of the game for this 
+			-> there are four conditions for winning the game 
+				-> the pieces on the board align 
+				-> vertically, horizontally or diagonally 
+
+		-> function 
+			-> we are writing a function called check_winner, to check if the alignment of pieces on the board has resulted in a win or not
+			-> and therefore to determine if the game should end because someone has won 
+
+def check_winner(board, piece):
+    for row in range(len(board)):
+        for col in range(len(board[0])):
+            if board[row][col] == piece:
+                # Check horizontal
+                if col + 3 < len(board[0]) and all(board[row][col + i] == piece for i in range(4)):
+                    return True
+                # Check vertical
+                if row + 3 < len(board) and all(board[row + i][col] == piece for i in range(4)):
+                    return True
+                # Check diagonal down-right
+                if row + 3 < len(board) and col + 3 < len(board[0]) and all(board[row + i][col + i] == piece for i in range(4)):
+                    return True
+                # Check diagonal up-right
+                if row - 3 >= 0 and col + 3 < len(board[0]) and all(board[row - i][col + i] == piece for i in range(4)):
+                    return True
+    return False
+  
+			-> iterating through each of the rows on the board 
+			-> then putting all of the different possible winning conditions into if statements 
+				-> these are done using a series of single line statements with booleans 
+				-> if the winning condition is met, then the function returns True, and if otherwise then False
+				-> there is a 'return True' statement embedded under each if block 
+
+		-> user experience 
+			-> aims		
+				-> we are defining another function, called the play_game() function 
+				-> we are using the input() function, to get player moves and manage turns 
+				-> creating a 'game' loop, to alternate between players, validating moves, place pieces and checking for game-ending conditions 
+
+def play_game():
+    board = [[None for _ in range(7)] for _ in range(6)]
+    current_player = "X"
+    while True:
+        print_board(board)
+        try:
+            column = int(input(f"Player {current_player}, choose a column (1-7): "))
+        except ValueError:
+            print("Invalid input! Please enter a number between 1 and 7.")
+            continue
+        if select_space(board, column, current_player):
+            if check_winner(board, current_player):
+                print_board(board)
+                print(f"Player {current_player} wins!")
+                break
+            current_player = "O" if current_player == "X" else "X"
+        else:
+            print("Move not allowed. Try again.")
+
+			-> the function 
+				-> we are iterating through the different columns on the board 
+				-> then a while loop, asking the user to enter an element onto the board 
+				-> then implementing error handling <- there is an invalid input - and a number has to be entered between 1-7
+				-> under the second if block, selecting a space on the board and checking if we have a winning condition 
+				-> since we are working under a while loop, we see the uses of the `continue` and `break` keywords here 
+				-> then printing out different statements, depending on what the outputs of these functions are 
+				-> we write a series of smaller functions, and then combine them into a larger one 
+				-> the `input` keyword is asking the user to enter a place on the board for the piece to go 
+
+			-> acceptance criteria 
+				-> game over detection <- we want to add in logic, which can detect a win or tie 
+				-> game loop 
+					-> we want to ask (prompt) players to enter their moves
+					-> we also want to validate and handle these, switch turns and check for game over conditions after each move 
+
+		-> extending the connect four project 
+			-> UI enhancement 
+				-> currently, the application works in a Jupyter notebook 
+				-> we want to transition this over to a web-based environment (HTML, CSS and JavaScript) 
+
+			-> AI integration 
+				-> we can pit the person against AI in the game
+				-> the person is playing against a player whose moves are randomly selected
+					-> this can be replaced with strategic algorithms, to further the model 
+						-> minimax 
+						-> alpha-beta pruning
+						-> these can be applied to evaluate the board states and select the best moves  
+
+				-> the function 
+
+import random
+
+def ai_move(board):
+    valid_columns = [col for col in range(1, 8) if board[0][col - 1] is None]
+    return random.choice(valid_columns)
+
+					-> we define a function, which iterates though the elements in the list 
+					-> then retuning a random choice in the valid columns which we have left 
+
+			-> summary 
+				-> making different functions and combining them to make a connect 4 game 
+					-> creating and displaying the board
+					-> piece placement 
+					-> logic to determine the winner 
+				-> related lessons for foundational knowledge 
+				-> acceptance criteria for moves on the board 
+				-> the project can be extended with UI enhancements and AI integration 

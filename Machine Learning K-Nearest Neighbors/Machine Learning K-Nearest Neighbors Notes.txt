@@ -1,0 +1,325 @@
+-> distance equations 
+	-> Euclidean
+	-> Manhattan 
+	-> Hamming
+	-> Using these in Python 
+
+-> representing points 
+	-> points are represented as lists / tuples
+		-> pt1 = [5, 8]
+		-> up to an n dimensional list
+	-> you can't calculate the distance between two coordinates with different dimensions 
+
+-> Euclidian distance <- straight line distance (Pythagoras)
+	-> calculated between two points
+	-> this can be generalised to n dimensions 
+	-> this can be written into a Python function 	
+
+def euclidean_distance(pt1, pt2):
+    distance = 0
+    for i in range(len(pt1)):
+        distance += (pt1[i] - pt2[i]) ** 2
+    return distance ** 0.5
+
+		-> (above)
+			-> this is generalised for n dimensional coordinates 
+			-> the physical significance of this is not necessarily distance
+			-> the variable is first initialised <- we have gone a distance of 0 thus far
+			-> it encodes Pythagoras with Python
+
+-> Manhattan distance <- the sum of absolute differences (||)
+	-> this distance metric is used for when movement is constrained to grid-like paths 
+	-> this is also known as L1 norm / taxicab distance
+	-> rather than Pythagoras, this takes the norm between the different elements in the coordinates 
+		-> we are taking them away each to calculate the distance between them, and using the magnitude of all of that
+		-> adding this up across the different dimensions for the calculation 
+	-> this can also be written into a Python function 
+
+def manhattan_distance(pt1, pt2):
+    distance = 0
+    for i in range(len(pt1)):
+        distance += abs(pt1[i] - pt2[i])
+    return distance
+
+		-> (above) 
+			-> it's Pythagoras but instead calculating the norm (||) between the different elements in the sets of coordinates 
+			-> the initial distance for this is 0
+			-> this is the sum of absolute differences 
+			-> we are iterating through the different dimensions in this function, so it doesn't matter how many of them there are 
+
+-> hamming distance <- this measures the number of differing dimensions 
+	-> this is a summation equation which is used to calculate the distance between two strings of equal length 
+	-> we are counting the number of positions at which the corresponding symbols differ 
+	-> i.e, there are several different ways of calculating distance, and each of them can be encoded into Python functions
+	-> this distance is used for error detection and correction algorithms 
+	-> this can be put into a Python function 
+
+def hamming_distance(pt1, pt2):
+    distance = 0
+    for i in range(len(pt1)):
+        if pt1[i] != pt2[i]:
+            distance += 1
+    return distance
+
+		-> (above)
+			-> the distance for this is again initialised at 0
+			-> the dimensions of the function arguments are then iterated through 
+			-> we then check is the dimensions are different and increment the `distance` variable
+
+-> using the SciPy library 
+	-> there are builtin functions to calculate these various different distances 
+	-> code to use these
+
+from scipy.spatial import distance
+
+# Euclidean Distance
+print(distance.euclidean([1, 2], [4, 0]))
+
+# Manhattan Distance
+print(distance.cityblock([1, 2], [4, 0]))
+
+# Hamming Distance
+print(distance.hamming([5, 4, 9], [1, 7, 9]))
+
+		-> (above)
+			-> there are three different methods for this, which are .euclidean(), .cityblock() and .hamming() 
+			-> the arguments for this are the lists which we want to calculate the various distances between 
+			-> the .hamming() method will return a normalised value for this 
+				-> this is the distance divided by the number of dimensions  (normalised)
+			-> these are builtin methods to calculate these distances, although functions can also be written which calculate said distances - and don't rely on external libraries 
+
+-> normalisation 
+	-> normalisation, dataset splitting for machine learning and the KNN algorithm 
+	-> normalisation 
+		-> normalising the ranges of the features in a dataset before training a machine learning model, so that when it is trained the weights that each of these features contribute to its predictions are proportional 
+
+		-> for example, if we have a house with 1-10 rooms, but the age goes from 0-100, then these two features of the model can be normalised 
+			-> this is so that the age of the house doesn't end up overshadowing the number of rooms that it has for the productions that the model makes 
+			-> if this is not done, then in visual representations of the model one factor can appear to dominate 
+
+		-> min-max normalisation <- like the linear interpolation of a value between a range 
+			-> this normalises values to lie within a given range
+			-> convert all of the values in the set between these two bounds 
+			-> there is an equation for this <- normalised value = (value-min)/(max-min)
+			-> this transforms the minimum value to 0 and the maximum value to 1 
+			
+			-> if there is a range of two values, then if we have a third we can calculate the percentage in between the range where it lies
+				-> this doesn't have to be a percentage, it can be a decimal 
+			
+			-> drawbacks 
+				-> this is sensitive to outliers 
+				-> the scale of the other values can get compressed because of this 
+
+		-> Z-Score normalisation 
+			-> standardisation 
+				-> this transforms data based on the mean and standard deviation of a feature 
+				-> there is an equation for this <- normalised value = (value - mu)/sigma 
+					-> mu is the mean 
+					-> sigma is the standard deviation 
+				-> this transforms values to centre around zero (mean) and scales them based on standard deviation 
+				-> values are then called by the number of standard deviations away they are from the mean 
+				-> it is the mean / value of a feature for a model
+
+			-> advantages 
+				-> this handles outliers better than min-max normalisation does
+				-> the data is normalised between 0 and 1 for this, which makes it easier for algorithms to learn patterns without being swayed by the scale of the features 
+
+			-> disadvantages 
+				-> this does not guarantee that all features will have the exact same scale 
+
+-> dataset splitting 
+	-> this is for supervised machine learning 
+	-> training, testing and validation datasets 
+	-> the validation sets are used to evaluate the model during training 
+	-> this is important to avoid overfitting 
+		-> we don't train the data on all of the model 
+		-> we need to test it on data it hasn't seen before 
+
+	-> this split commonly occurs in an 80/20 ratio, training to validation
+
+	-> N-fold cross-validation 
+		-> a model can have high variance is trained on a small dataset
+		-> machine learning models are trained on data
+		-> N-fold cross-validation helps in these cases 
+			-> the dataset is divided into N equally sized folds 
+			-> N-1 folds are then used for training and the remaining fold is used for validation 
+			-> the performance metrics are them averaged across all folds 
+
+		-> e.g, an 10-fold cross-validation
+			-> each fold is used once as the validation set, while the remaining 9 folds are used for training 
+			-> performance metrics are then averaged, so that model performance is more accurately calculated 
+
+-> the K-Nearest Neighbours (KNN) algorithm 
+	-> stages
+		-> k is selected <- this is the number of nearest neighbours we want 
+		-> distance is then calculated 
+			-> this is the distance between the target point and all other points in the dataset 
+			-> using Euclidian and Manhattan distance for this
+		-> then selecting the k closest datapoints to this 
+		-> vote or average
+			-> the class with the most votes among the neighbours is then assigned 
+			-> the average of the neighbours' values is assigned if regression approach is being used 
+
+	-> advantages
+		-> simplicity
+		-> non-parametric <- it is independent of data distributions 
+	
+	-> disadvantages
+		-> computationally expensive 
+			-> this requires distance calculations for each query point and can be slow to calculate if we have a lot of data  
+
+		-> sensitive to feature scaling 
+			-> normalisation has to be used, in case features with different ranges start to dominate the distance metric 
+
+	-> overfitting vs underfitting 
+		-> low k
+			-> high variance 
+			-> overfitting the training data 
+			-> this means that the model is too sensitive to noise 
+
+		-> high k 
+			-> high bias
+			-> underfitting the training data 
+			-> this means that the model is too generalised
+
+		-> interactive visualisations can be performed for this, which allow us to explore how changing k affects the decision boundary of the classifier for the model 
+			-> there is a trade-off between bias and variance for this
+
+	-> from the sklearn library 
+		-> this can be used to implement KNN
+		-> this has methods to split datasets, perform normalisation and evaluate models
+
+	-> section review
+		-> normalisation techniques
+		-> data splitting strategies 
+		-> the K-Nearest Neighbours algorithm 
+		-> these are required for building machine learning models 
+
+-> steps of the KNN algorithm  
+	-> context
+		-> we are using sklearn, to build a KNN classifier that predicts if a patient has breast cancer 
+
+	-> import the dataset
+		-> from sklearn.datasets import load_breast_cancer
+			-> the data function is first imported 
+			-> this is a function which loads the dataset 
+			-> it is pre-loaded in sklearn and contains the dataset 
+
+		-> breast_cancer_data = load_breast_cancer()
+			-> we are then loading in the data 
+			-> this returns a dictionary-like object containing the dataset
+			-> the dataset is now stored in this variable 
+			-> the attributes of this are 
+				-> data <- the features of the dataset
+				-> target <- the labels indicating whether each sample is malignant or benign
+				-> feature_names <- the names of the features
+				-> target_names <- the names of the target classes
+
+		-> exploring the data 
+			-> print(breast_cancer_data.data[0])
+				-> we are now exploring the data, by printing the first datapoint 
+			-> print(breast_cancer_data.feature_names)
+				-> then printing the names of the features corresponding to the values in the data 
+				-> this gives us a list of feature names and their values for the first sample 
+
+		-> understanding the target variable 
+			-> print(breast_cancer_data.target)
+				-> we are then identifying the target variable and understanding how the datapoints are classified for this 
+				-> the two methods used to do this are .target and .target_names
+				-> 0 and 1 represent benign and malignant tumours respectively
+
+			-> print(breast_cancer_data.target_names)
+				-> this gives the numerical labels for the cancer types
+
+		-> splitting the data 
+			-> from sklearn.model_selection import train_test_split
+
+training_data, validation_data, training_labels, validation_labels = train_test_split(
+    breast_cancer_data.data, 
+    breast_cancer_data.target, 
+    test_size=0.2, 
+    random_state=100
+)
+
+				-> (above)
+					-> we are now splitting the data into training and validation sets, to evaluate the model 
+					-> first, importing the function to split the dataset into training and validation sets 
+					-> then, splitting the dataset into features and labels
+					-> test_size allows us to set the proportion of the data which should be split into training and testing 
+					-> this returns four variables 
+						-> training_data <- features used for training
+						-> validation_data <- features used for validation
+						-> training_labels <- labels corresponding to training_data
+						-> validation_labels <- labels corresponding to validation_data
+
+		-> verifying the split 
+			-> print(len(training_data))
+			-> print(len(training_labels))
+			-> (above)
+				-> we are checking that the data has correctly been split 
+				-> this allows us to check that the length of training_data and training_labels are the same, so we know the split worked
+
+		-> creating and training the image classifier 
+			-> from sklearn.neighbors import KNeighborsClassifier
+			-> classifier = KNeighborsClassifier(n_neighbors=3)
+			-> classifier.fit(training_data, training_labels)
+
+			-> (above)
+				-> we are now training the model 
+				-> importing modules 
+				-> then creating the classifier, using the KNeighborsClassifier method, and specifying the number of neighbours for this 
+				-> the classifier is then trained, using the .fit() method 
+
+		-> evaluating the classifier 
+			-> accuracy = classifier.score(validation_data, validation_labels)
+			-> print(accuracy)	
+
+			-> (above)
+				-> we are then using the classifier on the validation set, to see how accurate it is 
+				-> the .score method allows us to do this
+					-> this compares the classifier's performance by comparing the predictions on validation_data with validation_labels
+				-> the accuracy score for the model is then returned  
+
+		-> tuning the number of neighbours <- optimising for k via a guessing / iterative approach 
+
+for k in range(1, 101):
+    classifier = KNeighborsClassifier(n_neighbors=k)
+    classifier.fit(training_data, training_labels)
+    accuracy = classifier.score(validation_data, validation_labels)
+    print(f"k={k}, Accuracy={accuracy}")
+
+			-> (above)
+				-> to find the optimal value of k, we can test multiple different ones
+				-> and then see what the accuracy of the model is in these cases 
+				-> optimising for k 
+				-> we are looping through the different values of k and training the model in each of these cases 
+				-> this returns the accuracy for each k and allows us to determine which value of k produces the highest one
+
+		-> graphing results to optimise for k 
+			-> import matplotlib.pyplot as plt
+
+k_list = list(range(1, 101))
+accuracies = []
+for k in k_list:
+    classifier = KNeighborsClassifier(n_neighbors=k)
+    classifier.fit(training_data, training_labels)
+    accuracy = classifier.score(validation_data, validation_labels)
+    accuracies.append(accuracy)
+
+plt.plot(k_list, accuracies)
+plt.xlabel("k")
+plt.ylabel("Validation Accuracy")
+plt.title("Breast Cancer Classifier Accuracy")
+plt.show()
+
+			-> (above)
+				-> we are trying different values of k and seeing how the accuracy of the model changes 
+				-> this is done by plotting a graph 
+				-> modules for this are first imported
+				-> data is then prepared for plotting and is plotted 
+				-> this displays a graph showing how accuracy changes with different values of k, so we can choose the best one
+
+		-> experimentation 
+			-> we are changing the random state during the split, to see how the performance of the model is affected
+			-> this is through experimentation, and involves modifying the random_state parameter in train_test_split to observe how different splits affect the model’s performance 
+			-> you can't just build a classifier, you have to test if the different splits (e.g not 80/20) when training the model - in case it would yield more accurate results 

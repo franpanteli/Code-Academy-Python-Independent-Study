@@ -1,0 +1,61 @@
+-> sequences and summations 
+	-> defining a sequence 
+		-> ordered lists of numbers 
+		-> these lists can be finite or infinite 
+		-> they can also be arranged in increasing or decreasing order 
+		-> sequences appear as lists of code instructions without decisions or repetitions 
+			-> sequences <- as in a series of coding instructions 
+			-> e.g store the value of x in a variable, and print it 
+			-> if we know the values in a sequence, we can calculate the next one 
+
+	-> finite and infinite sequences 
+		-> infinite sequences have an infinite length 
+		-> infinite sequences can converge
+			-> this can allow us to estimate a value 
+			-> e.g, summing an inverse a sequence of factorials leads to an estimate of e, which is irrational and has no end 
+
+	-> arithmetic sequences 
+		-> adding a common difference to the initial number and each subsequent number 
+		-> we can take away or add a certain number to the sequence after each iteration 
+			-> this is the "common difference" of the sequence 
+			-> this can be used to calculate / generate next terms in the sequence 
+
+	-> geometric sequences 
+		-> multiplying by a common ratio with the initial term and each subsequent term 
+		-> these sequences grow exponentially, since we are multiplying each element by a given ratio for each term in the sequence 
+			-> this can be used to model rapid growth (e.g epidemics)
+			-> if we have one of these sequences, we can divide one element by the previous one for the common ratio
+				-> and then use this to calculate the next term in the sequence 
+
+		-> summations  
+			-> adding the terms of a sequence
+			-> summation notation (from I=... to n=...) <- these can be infinite, or converge to a finite value  
+			-> the initial value in the summation can be negative 
+			-> summation notation 
+				-> this is used because of its compactness
+				-> these summations can be finite or infinite and can include variables and constants 
+				-> partial sums are summations of parts of a sequence 
+				-> the "terminus" of the summation is the number at the top of the Sigma symbol in the summation notation
+				-> we can also use this to calculate approximate sums of an infinite series 
+
+			-> finite summations 
+				-> finite summations / partial sums 
+				-> we can calculate finite summations using += and loops 
+				-> the summation from I = I to 10 can be calculated using a while loop <- while I < 10: and then printing the values of the summation after each iteration throughout this
+				-> summing the dollars in someone's wallet is a summation 
+				-> we can also use this to calculate partial summations
+
+			-> arithmetic sequence summations 
+				-> the sum of an arithmetic sequence can be calculated using a closed form
+				-> the sum of the first n numbers is 1/2 n(n+1)
+					-> this equation can be used with different values of n 
+					-> instead of having to write a while loop which goes through the numbers from n = 1 to n, we can write the equation into a Python function for this and then apply it in different cases 
+
+			-> summations rules 
+				-> the sum of (x+y) is the sum of x plus the sum of y 
+				-> you can bring a constant out of a summation 
+				-> if we are dealing with a sum of a constant, it's a constant add a constant - and then this repeated however many times we are summing it 
+					-> which means for this you can take the constant we are summing and multiply it by the number of times we are summing it 
+				-> there is also a constant addition nd constant subtraction rule 
+					-> these are summation identities for the sum of k+I and the sum of I-k
+				-> applying these allows us to break down more complex summations into smaller parts 		   

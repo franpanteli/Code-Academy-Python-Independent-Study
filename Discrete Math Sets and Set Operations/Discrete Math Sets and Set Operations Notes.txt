@@ -1,0 +1,172 @@
+-> introduction 
+	-> collections of unique items can form a set 
+	-> there are multiple different contexts for this 
+	-> set notation 
+		-> capital letters <- for the elements of the set 
+		-> knowledge used for this is an asset <- listing the elements of the set in curly braces
+		-> the set of letters in a word, for example
+	-> unindexed <- you can't access elements of it using indices (as you can with lists)
+	-> B is the set of all books, for example
+		-> the set of letters in the word 
+		-> elements in a set being stored in a random order <- unordered 
+		-> element <- an object in the set 
+			-> there is a symbol for this <- it looks like epsilon 
+				-> put a line through it, and the element isn't a part of the set 
+			-> items in a set can't be accessed by referring to an index or a key 
+	-> a set is one of four built-in datatypes in Python 
+		-> Fruits = {"apple", "blueberry", "peach", "cherry"} <- syntax for a set 
+		-> you can determine if an element is part of a set by iterating through it and running a boolean statement 
+
+			if "cherry" in Fruits:
+  				print("Yes, 'cherry' is in the Fruits set")
+
+		-> Python to write all the colours of the rainbow 
+
+-> special sets
+	-> sets
+	-> null <- an empty set with no elements, {}
+	-> N <- the natural set of all numbers, integers 
+	-> Z <- integers from negative infinity to plus infinity 
+	-> U <- a universal set which contains all elements of other sets and its own elements 
+	-> E <- the set of all even numbers 
+	-> O <- the set of all odd numbers 
+	-> W <- the set of whole numbers, this contains A 
+		-> this is a universal set 
+		-> there are sets which are a subset of this one 
+
+-> D for example, the set of possible outcomes when you roll a dice 
+	-> these items can be looped through in Python 
+	-> for example, to check if one is a subset of the other 
+	-> a die roll is an experiment 
+	-> set() <- to create an empty Python set 
+		-> {} <- for dictionaries 
+
+-> using a for loop to loop through different sets 
+	-> then iterating through them and checking if one is a subset of the other 
+	-> subsets of D, for example 
+	-> .issubset() <- to check if a set is a subset of something else 
+
+-> set operations on a single set
+	-> A^c is the complement of set A 
+		-> the set of all elements in the universal set U that are not in A
+		-> all elements of one set that are not members of the other
+		-> when you have two sets, it's the elements of one set which the other doesn't have 
+
+	-> for example, if it's the set of all chess pieces 
+		-> the ways they can be organised on the board 
+	-> finding the set and its complement  
+	-> the cardinality is the number of elements in the set 
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	-> |U| = |K| + |Kc|
+	-> len() <- for the cardinality of a set 
+	-> .difference() <- a set that contains the items that only exist in one set and not the other 
+		-> U.difference(k) <- this returns the set K^c (complement)
+	-> () <- set 
+		-> {} <- dictionary 
+
+-> exercise 
+	-> defining two sets, with {} and storing them in variables 
+	-> then using the .difference() method on them for the complement <- it's not symmetric 
+	-> then checking that the cardinality of the complement plus of the other set is the same as of the first one, using the .len() method 
+
+-> multiple operations on sets 
+	-> intersection <- the set containing all the elements that A and B have in common 
+		-> A n B
+		-> "the empty set" is a set which is empty  
+
+	-> the intersection of all the prime numbers and even numbers 
+		-> the set for the prime number is it and itself 
+		-> factors 
+		-> all even primes
+		-> 2 being the only even prime 
+
+	-> chorus students example 
+		-> we have three students 
+		-> they have a performance tomorrow 
+		-> we want students who are in a band and a chorus 
+		-> the union of the two sets, B n C
+			-> without repeating elements 
+
+	-> the difference operator 
+		-> the difference between two sets 
+		-> set A - set B 
+		-> the flavours of ice cream which are popular in one area, but not in another 
+		-> .union() and .intersection() methods for two sets in Python 
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+			-> you first define the sets, using {} 
+			-> two of them, and then you can use the .intersection() method on this
+
+-> Venn diagrams 
+	-> visual representations of sets 
+	-> a rectangle around the entire thing is for the universal set
+	-> each circle is for a set
+		-> it can also be an ellipse 
+	-> the intersection of the two sets is the section in the middle 
+	-> the complement is the part of one set which isn't touched by the other one the Venn diagram 
+
+	-> statistical equations can be used for this
+		-> using them by hand, and then coding the response into Python for the questions
+		-> |C ∪ V| = |C| + |V| - |C ⋂ V| <- this is a property of cardinality
+			-> these equations can be derived from observing the Venn diagrams  
+		-> for example, the number of customers saying they like (or don't) different flavours of ice cream 
+		-> cardinality <- the number of elements in the set 
+
+-> some laws for set operations 
+	-> set operations satisfy many identities
+	-> addition and multiplication
+	-> identity property for union 
+		-> the union of a set and the empty set is the empty set itself 
+		-> like the identity matrix - we have an identity set 
+
+	-> there exists an identity set for a set 
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	-> the identity property for intersection 
+		-> the intersection of a set with the universal set is the universal set itself 
+		-> the set of all natural numbers, for example 
+			-> the identity of the set for the intersection of sets 
+			-> we have A and N in this example 
+		-> proofs can be done on these properties using equations 
+
+	-> domination laws 
+		-> sets which are intersected with empty sets return empty sets 
+		-> the laws of set operations can be used to prove this 
+			-> by the identity property of union, for instance 
+		-> domination laws for intersections 
+		-> these equalities equations can be tested on the code
+			-> A and U <- unions 
+		-> ∅ <- the empty set 
+			-> there is notation which is written into the identities for these Venn diagrams
+
+-> applications of sets 
+	-> set theory is a foundation for maths / computer science 
+	-> sets in data science 
+		-> a dataset <- a collection of numbers / values that relate to a particular subject 
+		-> different criteria
+			-> e.g people with a family history of health issues for data science 
+			-> sets of different people with risk factors 
+			-> statistical analysis of this 
+			-> SQL statements for this <- updating / retrieving data on the database 
+				-> companies have databases <- e.g Amazon customers 
+		-> the intersection of two sets 
+
+-> review 
+	-> sets and set operations 
+	-> a set is denoted by a capital letter
+	-> listing all its unique elements in curly braces 
+	-> subset <- taking parts of the original set 
+
+	-> basic set operations 
+		-> the complement <- all of the elements which are in one set but not in the other 
+			-> the compliment forms another set 
+		-> the cardinality <- the number of elements in the set 
+		-> the intersection <- the set containing all elements of A that also belong to B 
+		-> the union <- both of them (not the intersection of them) on the Venn diagram 
+		-> the identity property <- the union of a set and the empty set is the set itself 
+			-> A ∪ ∅ = A
+		-> the intersection of a set with the universal set is the set itself 
+		-> the union of any set with the Universal set is the Universal set
+
+	-> these sets can be used to analyse datasets 
+		-> different risk factors in patients populations e.g 

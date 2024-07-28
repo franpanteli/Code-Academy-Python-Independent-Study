@@ -1,0 +1,141 @@
+-> predicting the winner of an NFL game
+	-> this is with machine learning 
+	-> the NFL is a sport in the US 
+	-> coaches, managers and fans
+		-> optimising training 
+	-> if you can predict who will win using machine learning
+	-> this is a case study
+	-> we are making an ML model 
+	-> tuning the hyper parameters of the model 
+
+-> we already have NFL data which we can train the model on 
+	-> defensive yards
+	-> percentage turnovers 
+
+-> there are different questions which we can use data to answer
+	-> the number of turnovers for a win
+	-> those can help the teams improve their performance
+
+-> this is logistic regression 
+	-> calculating the probability of winning based on rushing yards
+	-> the percentage success rate of the model 
+	-> models need multiple different metrics, or they aren't accurate enough 
+	-> making a model which predicts a game 70-80% of the time 
+	-> they are changing the value of the hyper parameter to see how the percentage accuracy changes
+
+-> feature importance 
+	-> which variables are the most important to the outcomes 
+	-> these can be plotted
+
+-> case study 
+	-> for 32 teams in the 2021 season
+	-> modelling the statistics to predict winning games
+	-> predicting the outcomes of the different games / for the outcomes of the games
+	-> we have 
+		-> hints
+		-> a data analysis cheat sheet
+		-> an introductory article (previous)
+		-> an ipynb file 
+
+-> process in the ipynb file 
+	-> import modules
+	-> import the data from a csv file, pd.read_csv('...')
+	-> summarise the outcomes <- nfl.result.value_counts()
+
+	-> altering the data
+		-> then we are converting the results in word form to number form 
+		-> we want numeric values as the outcome
+		-> converting the losses to 0's and the wins to 1's 
+		-> using .replace() for this 
+			-> nfl.replace(result_encoder, inplace=True)	
+			-> to encode the result using the encoder 
+		-> we have the wins and losses, we are converting W to 1 and L to 0 in the data, using .replace()
+
+	-> visualising the data
+		-> using sns.boxplot 
+		-> this is used to plot some of the data <- two of the metrics 
+
+		-> standardising the game stats 
+			-> before running a machine learning model on the data, we first have to standardise said data
+			-> this is done using the .transform method 
+			-> iloc[:, 8:] <- this selects all rows, starting from the 8th collumn 
+				-> integer location <- locate the integer 
+
+		-> then saving game outcomes 
+			-> this looks like extracting a column from the set 
+
+	-> then splitting the data into training and testing 
+		-> training 
+			-> to recognise winning games from non-winning ones 
+			-> splitting the data into training and testing 
+				-> training to train the model, and testing to test its predictions 
+			-> we have the data, and we split it into training and testing sets using the train_test_split() method 
+			-> this splits the features / result labels 
+
+		-> initialising a linear regression model 
+			-> we train the model to use the patterns of the statistics 
+			-> using a logistic regression model 
+			-> initialising the model, then training it by fitting it to the data 
+			-> this is using the LogisticRegression method, and then fitting it to the data using the .fit() method 
+
+
+		-> checking the model accuracy 
+			-> once the model is fit 
+			-> process 
+				-> we've converted the words in the data into numbers 
+				-> then normalised the data
+				-> then split it into training and testing sets
+				-> initialised a model and trained it 
+				-> now checking the accuracy of that model on the test data 
+			-> making predictions on the testing data 
+			-> this is done using the .predict() method 
+			-> we first make predictions on the test data, and then check their accuracy 
+			-> we first make predictions, and then check them using the model's accuracy 
+				-> so, the .predict() method for the predictions, and then the accuracy_score() method for the accuracy of these predictions 
+
+		-> optimising model hyperparameters 
+			-> we want to increase the accuracy of the model's predictions 
+			-> looking at the different performance metrics of the model 
+			-> there are multiple different metrics which we can look at for this, and it depends on the context
+			-> sometimes it can be combinations of different hyper parameters 
+
+		-> optimising by changing test size 
+			-> parameter tuning 
+			-> changing the size of the training / test split 
+			-> fitting the model and predicting an accuracy score 
+			-> changing the different parameters in the model, and then seeing how the accuracy of the predictions changes 
+			-> changing the proportion of data in the test vs the training samples 
+			-> at each test size the code performs a train-test split, fits the model, and computes an accuracy score
+
+		-> saving the optimised model 
+			-> then saving the model with the optimised parameters
+			-> optLr = LogisticRegression(penalty=penalty, C=C, solver='liblinear') <- this is how this is done 
+				-> make a logistic regression model with these parameters 
+
+	-> examine feature importance 
+		-> finding out what statistics are the most important to the model predicting wins
+		-> printing and plotting a bar chart to show these feature importances 
+		-> importance = abs(optLr.coef_[0]) <- this is the line which returns the importance
+			-> and then he plots these out on a bar chart 
+
+	-> then running the model on new unseen data
+		-> we now have a model which can make predictions 
+		-> using the model to make predictions about the outcome of the next NFL match
+		-> new_X = new_data.loc[:,features.columns] <- locate the data in the row 
+		-> new_X_sc = scaler.transform(new_X) <- normalise it 
+		-> new_preds = optLr.predict(new_X_sc) <- use it to make a prediction, with the .predict() method
+		-> acc_score = accuracy_score(new_results, new_preds) <- tell me how accurate the prediction is 
+		-> printing out the accuracy score and putting the information in a table 
+			-> we are creating a comparison table between the predictions and the outcomes that actually happened 
+		-> then printing the accuracy of this model  
+
+-> next steps 
+	-> this was a case study 
+	-> NFL statistics 
+	-> predicting wins and finding the most important statistics 
+	-> tuning the model hyper parameters
+	-> going into other topics 
+	-> building ML models
+	-> visualising results 
+	-> logistic regression
+	-> there is another one, which is analysing financial data with Python

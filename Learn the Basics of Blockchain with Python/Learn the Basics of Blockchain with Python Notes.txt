@@ -1,0 +1,345 @@
+-> blockchain concepts 
+	-> introduction to blockchain 
+		-> this came out in 2008 with Bitcoin 
+		-> it is a decentralised distributed ledger technology 
+			-> it could securely and transparently record transactions without the need for a central authority 
+			-> other systems required banks to validate transactions 
+				-> these were centralised 
+				-> using a central agency to validate transactions like this required more resources 
+
+	-> key components of blockchain 
+		-> blocks 
+			-> these are units of data 
+			-> each block contains transactional data 
+				-> a sender, receiver and amount 
+				-> a timestamp <- when the block was created 
+				-> a hash <- a unique digital fingerprint 
+
+		-> blockchain 
+			-> this is a chain of blocks 
+			-> a block is a piece of information, and a chain of these is a blockchain 
+		 	-> this is a decentralised technology 
+			-> the blocks are linked in chronological order 
+			-> each block stores the name of the next block in the chain which is linked to it 
+			-> this way, if one of the blocks is tampered with, then this will be evident in the entire chain 
+		
+		-> hashing 
+			-> this is for security 
+			-> a hash function 
+			-> this is a function which inputs the data of a block and outputs a hash 
+			-> a hash 
+				-> this has a fixed size and it deterministic 
+				-> the input for this yields the same hash 
+				-> the outputs for this are also unique to the inputs 
+
+	-> blockchain network and decentralisation
+		-> decentralisation 
+			-> a blockchain operates on a decentralised network 
+			-> each of the computers in this are nodes 
+			-> there is a copy of the entire blockchain on each of the nodes 
+				-> each of these node validates and verifies the transactions 
+			-> consensus algorithms 
+				-> proof of work 
+				-> proof of stake 
+				-> these make sure that the nodes agree on the validity of the transactions 
+			-> by "decentralised", it is meant that there are multiple different nodes (computers) which form the larger network - from which the blockchain is validated 
+				-> rather than from a larger centralised agency / authority 
+				-> the entire chain is stored on each of these nodes 
+
+		-> participants 
+			-> nodes in the blockchain network actively participate in transaction validation 
+			-> there is an entire network of computers, and each of them has a copy of the blockchain 
+			-> when there is a transaction, this is validated across multiple different nodes (computers in this network)
+			-> this makes sure that the transaction has occurred securely 
+
+	-> genesis block 
+		-> this is the initial block in the blockchain 
+		-> the start / genesis block of the chain 
+		-> this serves as the foundation from which subsequent blocks are added
+		-> this block does not have a hash reference, since there are no prior ones to this on the chain
+			-> so it's previous hash is set to something else 
+		-> each block has a hash number which is for the previous block in the chain 
+			-> this is calculated using a hash function 
+
+	-> applications and implications 
+		-> bitcoin and cryptocurrency 
+			-> bitcoin was an application of blockchain 
+			-> verifying and recording transactions in a decentralised and secure way 
+
+		-> beyond currency 
+			-> there are more applications to this than just cryptocurrencies 
+			-> supply chain management, healthcare records, voting systems
+			-> transparency, immutability and security features 
+
+	-> challenges and future developments 
+		-> scalability <- blockchain and scalability 
+			-> high transaction volumes 
+		-> regulation <- regulatory frameworks for blockchain technology 
+			-> innovation with legal and security concerns 
+		-> interoperability <- the communication between different blockchains 
+
+	-> conclusions 
+		-> blockchain <- managing transactions and data
+		-> issues <- scalability, regulation and interoperability 
+		-> for digital transactions and trust mechanisms 
+
+-> hashing and blockchain integrity 
+	-> unique hashes 
+		-> hacking is a cryptographic technique in blockchain <- it is irreversible 
+		-> inputing information from a block and outputting information for its hash 
+		-> the same input also produces the same hash 
+		-> each of the elements in the blockchain has a hash 
+
+	-> chaining blocks 
+		-> each block includes a reference to the hash of the previous block in the chain 
+		-> so chaining the data of a block will change its hash 
+		-> this will break the link in the blockchain, since the hash which the next block in the chain stores is now outdates due to the change of information on that block 
+
+	-> immutability
+		-> each block on the chain stores the hash of the previous block on the chain
+		-> so if the information on one of the blocks changes, then its hash will also change
+		-> the hash which the previous block on the chain stores will need to change 
+		-> this means if a hacker wants to change information in the block, then they will have to update the value of the hash for this block across all of the different nodes (computers) on the chain
+
+-> securing the blockchain with proof-of-work
+	-> mining 
+		-> Proof of Work <- PoW
+			-> this is for  securing blockchain networks against attacks 
+		-> one example of PoW is mining 
+		-> miners compete to solve complex mathematical problems, to validate and add new blocks to the blockchain 
+
+	-> difficulty 
+		-> these complex problems require a lot of computational power to solve
+		-> miners iteratively guess a nonce <- a random number 
+		-> then combining this with the block's contents 
+		-> then calculating the hash of the block 
+			-> this is done using algorithms like SHA-256 
+
+	-> consensus 
+		-> miners find a nonce that satisfies the difficulty criteria 
+		-> the new block is broadcast to then network for this 
+		-> the other nodes (computers on the chain) then verify the nonce and hash for this 
+		-> the block is then accepted if it meets the criteria for this 
+		-> this establishes consensus on the correct blockchain state
+
+-> longest chain rule and security
+	-> trustlessness
+		-> the longest chain rule <- the valid chain with the most cumulative computational effort (proof of work) invested in it is considered the correct one 
+
+		-> trustlessness 
+			-> the different nodes on the blockchain network don't need to trust each other, they can all trust the longest chain 
+			-> these nodes are the different computers in the network which all store the chain
+
+	-> security against attacks
+		-> if an attacker alters a block, they have to redo the proof-of-work for that the block and all subsequent blocks faster than the entire network combined 
+		-> the more blocks that are added to the chain, the harder this becomes 
+		-> this is an important security feature of blockchain technologies    
+
+-> implications and applications
+	-> decentralisation 
+		-> blockchain is decentralised
+		-> it is contained on an entire network of nodes 
+		-> this means that there are less points of failure  
+
+	-> applications
+		-> supply chain management
+		-> voting systems
+		-> identity verification
+		-> this is because of its transparency, immutability, and security features
+
+	-> conclusions
+		-> digital transactions 
+		-> this uses cryptographic techniques <- hashing, Proof-of-work
+		-> these provide security, immutability, and transparency
+		-> global systems of trust and transactions 
+		-> this is a technology that is being integrated into the mainstream 
+
+-> implementing the blockchain 
+	-> representing transactions
+		-> transaction 
+		-> these transactions are stored in a `mempool`
+		-> this is a waiting area, before they are added to a block 
+		-> the transactions are stored in something which looks like a Python dictionary
+
+transaction1 = {
+  'amount': '30',
+  'sender': 'Alice',
+  'receiver': 'Bob'
+}
+
+	-> creating a block class
+		-> we then create a block class 
+		-> this encapsulates the structure of a block in a blockchain 
+		-> methods can be defined as part of this, which compute a hash for the block's contents 
+
+#import modules 
+from datetime import datetime
+from hashlib import sha256
+
+#define the block class 
+class Block:
+
+  #initialise methods
+  def __init__(self, transactions, previous_hash, nonce=0):
+    self.timestamp = datetime.now()
+    self.transactions = transactions
+    self.previous_hash = previous_hash
+    self.nonce = nonce
+    self.hash = self.generate_hash()
+
+  #a hash generator method
+  def generate_hash(self):
+    block_contents = str(self.timestamp) + str(self.transactions) + str(self.previous_hash) + str(self.nonce)
+    block_hash = sha256(block_contents.encode()).hexdigest()
+    return block_hash
+
+		-> the second method here computes the SHA-256 hash of the block’s contents
+
+	-> creating the blockchain class
+		-> we then create a blockchain class, to manage multiple blocks 
+
+class Blockchain:
+  def __init__(self):
+    self.chain = []
+    self.unconfirmed_transactions = []
+    self.genesis_block()
+
+  def genesis_block(self):
+    transactions = {}
+    genesis_block = Block(transactions, "0")
+    genesis_block.generate_hash()
+    self.chain.append(genesis_block)
+
+  def add_block(self, transactions):
+    previous_hash = self.chain[len(self.chain) - 1].hash
+    new_block = Block(transactions, previous_hash)
+    proof = self.proof_of_work(new_block)  # Implement proof of work
+    self.chain.append(new_block)
+    return proof, new_block
+
+  def print_blocks(self):
+    for i, block in enumerate(self.chain):
+      print(f"Block {i}")
+      print(f"Timestamp: {block.timestamp}")
+      print(f"Transactions: {block.transactions}")
+      print(f"Current Hash: {block.hash}")
+      print(f"Previous Hash: {block.previous_hash}")
+      print()
+
+  def validate_chain(self):
+    for i in range(1, len(self.chain)):
+      current_block = self.chain[i]
+      previous_block = self.chain[i - 1]
+      if current_block.hash != current_block.generate_hash():
+        return False
+      if current_block.previous_hash != previous_block.generate_hash():
+        return False
+    return True
+
+		-> there are multiple methods which are defined as part of this 
+			-> initialising the self class 
+			-> setting up the first block in the chain <- this is the genesis block 
+			-> writing a function (method) which can add a block to the chain 
+			-> another which can print the blocks 
+				-> this is done using a for loop 
+				-> we iterate through each of the block instances and print their information 
+
+			-> these are written into Python as their own class 
+			-> then another method which validates the chain 
+				-> we iterate through each of the blocks on the chain and can return the hash for each of them using this method
+				-> this hash depends on the content of the block in the chain 
+
+	-> Proof-of-Work implementation
+		-> Proof-of-Work (PoW) is implemented to secure the blockchain 
+		-> this involves finding a nonce, such that the hack of the block starts with a number of leading zeros 
+			-> a nonce is a number that is used once 
+			-> this is a random or pseudo-random number
+
+class Blockchain:
+  # ... (previous methods)
+
+  def proof_of_work(self, block, difficulty=2):
+    proof = block.generate_hash()
+    while proof[:difficulty] != '0' * difficulty:
+      block.nonce += 1
+      proof = block.generate_hash()
+    block.nonce = 0
+    return proof
+
+		-> the class is updated for this with a new method 
+			-> this uses the .generate_hash() method
+			-> then a while loop to generate hashes until we find the one which completes the PoW process for this
+
+	-> adding blocks to the blockchain
+		-> if we want to add a new block to the blockchain 
+		-> we calculate the proof of work and append the block to the chain 
+
+class Blockchain:
+  # ... (previous methods)
+
+  def add_block(self, transactions):
+    previous_hash = self.chain[len(self.chain) - 1].hash
+    new_block = Block(transactions, previous_hash)
+    proof = self.proof_of_work(new_block)
+    self.chain.append(new_block)
+    return proof, new_block
+
+		-> (above)
+			-> there is a new method which is defined for adding blocks to the blockchain  
+			-> each of these elements is defined as part of a class 
+			-> the method for adding blocks to the chain is the add_block method 
+			-> this takes the previous hash 
+			-> we are adding (appending) the block to the end of the chain
+
+	-> validating the blockchain
+		-> this is to ensure the integrity of the blockchain 
+		-> validating each block and its connection to the previous one
+
+class Blockchain:
+  # ... (previous methods)
+
+  def validate_chain(self):
+    for i in range(1, len(self.chain)):
+      current_block = self.chain[i]
+      previous_block = self.chain[i - 1]
+      if current_block.hash != current_block.generate_hash():
+        return False
+      if current_block.previous_hash != previous_block.generate_hash():
+        return False
+    return True
+
+		-> (above)
+			-> we have defined another method in the blockchain class
+			-> this is the validate_chain block
+			-> we are iterating through the different elements the chain 
+			-> then generating a hash for each of those and checking if this is validated or not 
+			-> this is done using a series of if statements and boolean conditions 
+
+	-> testing and conclusion
+		-> to use the blockchain:
+
+block_one_transactions = {"sender": "Alice", "receiver": "Bob", "amount": "50"}
+block_two_transactions = {"sender": "Bob", "receiver": "Cole", "amount": "25"}
+
+local_blockchain = Blockchain()
+proof1, block1 = local_blockchain.add_block(block_one_transactions)
+proof2, block2 = local_blockchain.add_block(block_two_transactions)
+
+local_blockchain.print_blocks()
+
+print("Is blockchain valid?", local_blockchain.validate_chain())
+
+		-> (above)
+			-> this code is added, so that the blockchain can be used 
+			-> process this block uses 
+				-> a blockchain is first set up
+				-> transactions are then added as blocks 
+				-> the integrity of this is then verified, by using proof-of-work and validation methods 
+			-> transactions on the blockchain are represented by dictionaries 
+			-> and then the methods for this are used to add and print the blocks on the chain 
+
+	-> this explored essential elements of building a basic blockchain in Python 
+		-> demonstrating transactions and blocks 
+		-> hashing 
+		-> proof-of-work
+		-> blockchain validation

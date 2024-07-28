@@ -1,0 +1,375 @@
+-> CLI setup
+
+-> the command line
+	-> finding files and folders 
+	-> Bash is a CLI
+	-> a shell is a type of CLI 
+	-> Bourne Shell 
+	-> this is the default shell for Mac and Linux 
+	-> zsh is a replacement for Bash in Catalina 
+
+-> in the terminal 
+	-> this is an application which you can open 
+	-> you can also put this in your doc 
+	-> Bash is more popular, because it is open source 
+
+-> Git Bash 
+	-> to access Bash 
+	-> it's an installation process for Git Bash 
+	-> you are in the home directory <- ~ 
+	-> the current directory is listed before you can type in commands
+	-> this is a CLI <- command line interface
+
+-> commands 
+	-> ls <- to list the contents of the current directory 
+	-> mkdir test <- to make a folder called test
+	-> cd test <- to navigate into it 
+	-> echo "Hello Command Line" >> hello_cli.txt <- to create a new file named hello_cli.txt and add Hello Command Line to that file
+
+-> Jupyter notebooks 
+	-> these are ways of writing and running Python 
+	-> .ipynb 
+	-> popular for data science, machine learning 
+	-> executing code and seeing the output quickly 
+	-> the Jupyter notebook interface 
+		-> there is a back-end kernel and a front-end interface 
+		-> i <- interactive (can be broken up into smaller peices)
+		-> iPython can be broken up 
+
+-> IDEs
+	-> a Jupyter notebook is an IDE 
+	-> this has embedded documentation <- tab when you are using a method 
+	-> installing Jupyter notebooks 
+
+-> installing Jupyter notebooks 
+	-> installing Jupyter notebook as part of Anaconda / Miniconda 
+	-> Anaconda is a Python and R distribution for data and development environments 
+	-> Mini Conda is a smaller version with no packages 
+	-> Conda is a package manager, as is pip 
+		-> one is for any languages and the other is only for Python packages 
+		-> pip is the recommended one 
+	-> Anaconda requires more space because it comes with packages 
+	-> properties 
+
+	-> steps 
+		-> downloading the right version 
+		-> agreeing to the terms 
+		-> adding it to the path variable 
+		-> the install button 
+		-> administrator privileges 
+		-> it installs in the home directory by default 
+		-> verifying the installation 
+		-> then launching a Jupyter notebook 
+		-> installing packages for all users
+		-> in the terminal 
+
+import pandas
+import sklearn
+import matplotlib
+import seaborn
+import nltk
+import bs4
+import pandas, sklearn, matplotlib, seaborn, nltk, bs4
+
+pip install pandas
+pip install scikit-learn
+pip install matplotlib
+pip install seaborn
+pip install nltk
+pip install beautifulsoup4
+
+		-> do not add anaconda to the path for the project 
+		-> Jupyter notebooks can be opened from the terminal 
+		-> data in Jupyter notebooks 
+		-> these are all packages for data 
+			-> some of the packages depend on other packages 
+
+-> what these different modules do: 
+	-> pandas <- for working with DataFrames
+	-> scikit-learn <- for machine learning
+	-> Matplotlib <- for visualizations
+	-> seaborn <- for statistical visualizations
+	-> NLTK <- for text analysis
+	-> spaCy <- for more text analysis
+
+	-> when you install a module, its dependencies are automatically installed 
+	-> pip install module 
+	-> CLI <- command line interface 
+		-> Bash is the default shell for this on a Mac
+		-> the installation location 
+		-> adding Anaconda to the path environment file 
+
+-> Pycharm is an IDE 
+	-> you can create shortcuts for / to this 
+	-> there is documentation for Anaconda for more information about its properties 
+	-> the licensing terms 
+	-> have mini conda as the default version we use
+	-> if you import a module which doesn't exist, you will get an error message
+		-> the module you are importing has to exist 
+
+-> writing and debugging code in Jupyter
+	-> using Jupiter notebooks for writing and debugging code 
+	-> this can be launched by command line or Anaconda Navigator 
+	-> when Anaconda Navigator is launched, it opens in a browser 
+	-> you can create new Python files from within the notebook 
+	-> shift and enter <- to move onto the new cell 
+	-> print statements / variable assignments
+
+	-> debugging 
+		-> %debug is for interactive debugging 
+		-> error messages can also be interpreted for this 
+		-> ? <- for documentation 
+		-> they manufacture an error, and then go through it  
+			-> the module being used wasn't imported
+			-> it shows you where the errors are 
+			-> put your errors into ChatGPT for troubleshooting 
+	-> we also have tab completion, to see more different methods we can use
+ 
+	-> tab completion and accessing the function arguments 
+		-> len / sum 
+		-> you can start typing, hit tab and then Jupyter offers suggestions as to what can come next 
+		-> sorting the list from larges to smallest 
+		-> reverse equals True 
+
+	-> magic commands <- non-coding 
+		-> they create a zero division error 
+		-> we are debugging this 
+		-> we need to close the debug cell and go back to the program 
+		-> %debug 
+		-> there is more documentation for this
+
+-> custom formatting in Jupyter Notebook
+	-> we can have more functionality than with the terminal 
+	-> equations with LaTeX
+	-> magic commands which come with IPython for efficiency
+	-> rich text vs plain text
+	-> rich text contains formatting and plain text does not 
+
+	-> syntax for markdown cells 
+		-> there are dropdown options for the cell type 
+		-> 6 levels of headings 
+		-> hashtags 
+		-> asterisks and underscores 
+		-> monospace code can also be entered in 
+		-> <br> <- for a new line in the code 
+		-> then ordered and unordered lists 
+			-> 1., 2, in lists, or *
+			-> *'s are bullet points 
+
+		-> more
+			-> ![title](img/picture.png) <- images
+			-> [link text](http://url) <- links 
+			-> [section title](#section-title) <- external sections 
+
+	-> hotkeys 
+		-> to increase efficiency 
+		-> shortcuts 
+		-> help>keyboard shortcuts for this 
+
+		-> basic commands 
+			-> shift enter 
+			-> a and b <- to enter cells above or below the current ones
+			-> Basic navigation: Enter, Shift-Enter, Up/k, Down/j
+			-> Saving the notebook: s
+			-> change Cell types: m to change the current cell to Markdown, y to change it back to code
+			-> cell creation: a to insert a new cell above the current cell, b to insert a new cell below
+			-> cell editing: x, c, v, d, z
+			-> delete Current Cell: d + d (press the key twice)
+			-> kernel operations: i, 0 (press twice)
+			-> split the current cell into two: Ctrl + Shift + -
+			-> find and replace on your code: Esc + f
+			-> toggle cell output: Esc + O
+
+		-> LaTeX
+			-> for writing maths 
+			-> LaTeX in the markdown cell 
+			-> to add a little spacing in display mode, use \
+			-> to add a new line when in math display mode, use \\
+			-> to display a fraction, use \frac{arg 1}{arg 2}
+			-> for power (superscripts text), use ^{}
+			-> for indices (subscripts), use _{}
+			-> for roots, use \sqrt[n]{arg}
+			-> the [n] is optional
+
+		-> we can also add in greek letters 
+			-> there are different symbols for these 
+
+		-> magic commands 
+			-> line magics and cell magics 
+				-> % are line and %% are cell 
+				-> one works on a line and the other works on an entire cell 
+			-> %lsmagic <- return a list of all magic commands
+			-> %run <- execute external python script
+			-> %load <- load in a local file, URL, function, or class
+			-> %who <- return a list of any variables that have a certain type within the notebook
+			-> %matplotlib notebook <- allow you to interactively work with plots from matplotlib
+			-> %matplotlib inline <- allow you to disable interactivity with plots.
+			-> %%time <- show the time it took to execute the line of code. Good for checking efficiency
+			-> the interactive shell 
+
+-> custom formatting in Jupyter notebook
+	-> compared to Python in the terminal, in ipynb files we have magic commands, LaTeX, et al 
+	-> rich text vs pain text <- one allows formatting and the other doesn't 
+	-> markdown renders into styled text 
+	-> the cell has to be of the markdown type and not the code type 
+	-> strong and emphasised text <- bold and italics 
+		-> ** vs *
+	-> backticks 
+	-> <strong> and <em>
+	-> you can also add sub-bullets 
+	-> the file path / URL for this
+		-> we can add external links 
+	-> ` <- for monospace 
+	-> <br> <- new lines / breaks in the code 
+	-> tabs still work for subordered lists 
+	-> we can also add external / internal links 
+		-> internal sections as well 
+		-> using hot
+
+-> pretty displays 
+	-> from IPython.core.interactiveshell import InteractiveShell
+	-> InteractiveShell.ast_node_interactivity = "all"
+	-> all statements and variables on their own line 
+	-> ? <- printing the help documentation 
+	-> ; <- to suppress the output of a function 
+	-> alt + mouse click <- to select more than one row 
+	-> see the documentation for more
+
+-> getting started with IDEs
+	-> integrated development environments 
+	-> editing / compiling and debugging code in one application 
+	-> we can edit source code using this 
+	-> autocomplete <- this allows us to predict / complete the code based on the language syntax
+	-> compiling code <- automating the compilation process 
+	-> debugging <- to fix errors 
+	-> there are different IDEs, depending on the context 
+		-> PyCarm for Python and RStudio for R
+	-> there are advantages to IDEs over text editors 
+
+-> getting started with text editors
+	-> text editors <- VSCode 
+	-> applications to edit code <- syntax highlighting / colour schemes 
+
+	-> text editors are lighter than IDEs
+		-> VSCode is the recommended IDE 
+		-> it has a community around it and works on multiple different operating systems 
+		-> creating files in VSCode 
+
+	-> this also allows for file extensions 
+		-> debugging 
+		-> Git integration 
+		-> an integrated terminal 
+		-> you can change the colour schemes of this IDE when you code
+
+-> what is a relational database management system?
+	-> Relational Database Management System (RDBMS)
+		-> software applications for relational databases 
+		-> this is based on the relational model 
+		-> structures of data on a system 
+		-> different tables for this <- relations between the different tables
+		-> tables are the fundamental structures of one of these databases
+			-> rows are for individual attributes and columns are for the entire fields 
+			-> schema and data types 
+				-> the schema of a table is for its structure 
+				-> column names and their datatypes 
+				-> the types of operations 
+
+	-> RDBMS <- software which manages relational databases 
+		-> using a structured approach 
+		-> MySQL: Open-source RDBMS commonly used for web applications; known for ease of use and reliability, though scaling performance can be a concern
+		-> PostgreSQL: Open-source RDBMS offering additional features like support for complex queries and transactions; slightly slower performance compared to MySQL
+			-> transactions
+		-> Oracle Database: Proprietary RDBMS known for robustness, used extensively in enterprise applications such as banking; offers comprehensive features but comes with a high cost
+		-> SQL Server: Microsoft’s proprietary RDBMS targeted at enterprise applications; includes extensive integration with Microsoft products but can be costly
+		-> SQLite: Lightweight, embedded RDBMS that stores the entire database as a single file; used in mobile apps and other embedded systems
+
+	-> SQL <- the language used to interact with relational databases 
+		-> database objects 
+		-> this is open source 
+		-> scaling for performance 
+
+	-> performance optimisation 
+		-> which RDBMS is used depends on scalability, cost and feature requirements 
+
+-> installing PostgreSQL locally
+	-> we need the PostgreSQL server and a client interface to interact with it
+	-> download the packages from their website 
+	-> this requires a password and default port 
+	-> using native apps
+	-> verifying security prompts 
+	-> updating the package lists and installing PostgreSQL 
+	-> then setting up the GUI client 
+	-> connecting to the server using the password which was set up during installation 
+	-> connecting to the PostgreSQL sever
+	-> this requires signing keys 
+	-> setting up a client for the database and managing the data effectively 
+
+-> getting started with Git and GitHub desktop
+	-> VSC <- version control systems 
+		-> systems which manage changes to files / directories over time ]		-> so we can revert to previous versions
+	-> commits <- changes to the repository 		
+		-> main is the default 
+	-> Git <- local 
+	-> GitHub <- cloud-based
+	-> GitHub Desktop <- for locally managing projects with Git, without the terminal 
+	-> repositories can be created and initialised locally 
+	-> then the changes be pushed to GitHub 
+	-> fetching and pulling 
+	-> cloning existing repositores 
+	-> version control
+		-> for managing different projects effectively 
+		-> project management 
+	-> GitHub Desktop 
+
+-> basic Git workflow 
+	-> Git <- for keeping track of changes to a project over time 
+		-> so we can reference the changes to a project 
+	-> git init <- to initialise a repository 
+		-> changing a directory to a repository 
+		-> tracking changes made to the project 
+		-> this is in Bash 
+		-> Bash vs Linux 
+
+-> Git workflow  
+	-> we have a git repository 
+	-> a working directory, a staging area and a repository
+	-> editing files in the working directory 
+	-> saving changes with a commit
+	-> working directory > staging area > repository 
+
+-> git status 
+	-> to check the status of the changes we are making 
+	-> the status of the project
+	-> this is a Bash command 
+	-> untracked files <- Git sees the file but has not started making changes yet
+
+-> git add filename
+	-> then git status to check the status of this 
+
+-> git diff 
+	-> adding a file to the staging area 
+	-> the file is now tracked 
+	-> we are checking the differences between the working directory and the staging area
+	-> depending on the output to this
+	-> identifying the file by its name 
+
+-> git commit
+	-> commits are the last stage of the Git workflow 
+	-> git commit -m "Complete first line of dialogue"
+	-> after staging the changes, with .
+
+-> then git log 
+	-> to see different versions of the project 
+
+-> generalisations 
+	-> Git workflow 
+	-> generalising 
+	-> Git is for version control 
+	-> to keep track of changes to the project 
+		-> git init 
+		-> git status 
+		-> git add 
+		-> git diff <- the difference between the working directory and the staging area 
+		-> git commit 
+		-> git log <- a list of all the previous commits 
+	-> q <- a keyboard shortcut to escape 

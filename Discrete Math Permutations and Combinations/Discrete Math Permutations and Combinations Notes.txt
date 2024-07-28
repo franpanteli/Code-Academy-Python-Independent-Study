@@ -1,0 +1,192 @@
+-> enumerations 
+	-> the number of ways to select from / arrange a set of n objects 
+
+-> sets 
+	-> the mathematical definition of it 
+	-> the number of different ways we can pick the objects 
+	-> for example if we have two sets
+	-> or and <- add, multiply 
+		-> the multiplication principle 
+	-> probabilities 
+
+-> e.g. the number of different options for a bag of fruits 
+	-> to take one bag of fruit and one bag of chips from the bag 
+	-> doing the answer by hand, and then coding it 
+
+-> enumerations with repetition 
+	-> we have a lot of different flavours
+	-> the different number of ice cream selections which can be made 
+	-> factorials 
+	-> each time we use one, then we have one less left to pick from 
+
+	-> picking the items out of n possible choices 
+		-> choosing 
+		-> permutations 
+		-> n to the power of how many times n is repeated is we are doing permutations and not combinations 
+
+	-> the number of possible dice rolls available 
+		-> then the number of four digit variables which are possible 
+		-> to the power of the number of times n is repeated 
+		-> depending on the context of the question
+
+-> permutation 
+	-> permutation 
+	-> arrangements / selections where the order matters
+	-> buying a bookshelf and having to arrange the books on the shelf 
+	-> the number of different ways which we can arrange them into 
+	-> the arrangement of the bookshelf 
+	-> each time the book is placed on the shelf, there is one less book to place on it 
+	-> n! different ways <- n(n-1)(n-2)...1
+		-> factorial 
+		-> this is undefined for negatives 
+	-> we want the number of different character strings which can be constructed out of a set 
+		-> another example is different ways of organising chess pieces 
+		-> doing this by hand and then coding it into Python 
+
+-> permutations of a subset 
+	-> the number of permutations of n items 
+	-> the permutation of r out of n of those items 
+	-> a website with password requirements
+	-> the number of permutations of passwords which exist 
+	-> characters which produce weak passwords 
+
+	-> the number of different possible passwords 
+		-> if the computer can brute force them or not 
+		-> n!/(n-r)! <- this neglects the options which we have already used 
+			-> in the password example, it's the number of letters we have left 
+
+	-> in this question 
+		-> the number of ways to list the 50 states of the US
+		-> storing it in the 50 states variable 
+		-> the number of lists which we have possible 
+		-> only listing 7 of the 50 states 
+		-> it's an example where we are coding the permutation equation but for organising the different states in the US 
+
+-> combination 
+	-> enumerations 
+	-> where the order or arrangement doesn't matter 
+
+	-> one requires a change in direction 
+		-> directional changing 
+		-> e.g the order which countries are flown to 
+			-> composing lists of US states
+			-> permutations 
+			-> lists of generated states 
+
+	-> combinations <- where the order doesn't matter 
+		-> the choosing function 
+		-> there are multiple equations for this 
+			-> a vector one
+				-> 2x1 of nxk 
+			-> then another one with a k! on the bottom <- in comparison to the permutations equation
+			-> the choose operation 
+				-> out of all of these options, choose one
+
+	-> card game question 
+		-> using this equation on cards in a deck 
+		-> 13 unsorted
+		-> there are multiple different types of hands
+			-> in some card games, the order of these matter
+		-> assuming we are going to sort the cards when we receive them 
+			-> the number of ways we can arrange the cards
+			-> sorting the cards when we receive them <- the number of different 13 card hands we can sort these into 
+		-> it's doing the problem by hand first, and then coding the solution into Python 
+			-> in which case it's fine
+			-> these equations can be put into their own functions 
+
+-> permutations with identical items 
+	-> how to enumerate elements of a multiset 
+		-> one which contains elements that aren't distinct
+		-> repeated elements in the set 
+		-> the number of times we can rearrange the letters in a word, if two of the letters in the word are the same 
+			-> then we have one less possibility as a result of this 
+		-> the number of permutations we can get out of this has a certain value as well <- times all of the permutations together if we are doing this for a number of different words 
+
+			-> combinatorics 
+			-> the number of permutations of certain words 
+				-> doing this by hand and then putting the response into Python 
+
+	-> there exist several identities for this 
+		-> the choosing equation with factorials 
+		-> the of a factorial 
+
+-> permutations with identical items 
+	-> enumerating elements of a multiset 
+		-> some of the elements in the set aren't distinct 
+		-> e.g a letter C appearing more than once in a letter 
+		-> then we have to reduce the number of permutations in the letter 
+		-> permuting a word with more than one repeated character
+		-> n! / r... <- multiplying the r!'s together 
+		-> the equations changes when there are elements in the set which are the same, because the number of combinations we can make has now decreased by 1 for each time the letter is repeated
+		-> the number of combinations of the word COMBINATORICS 
+			-> doing the question by hand, and then storing the result in the code 
+			-> there are again multiple identities for this
+			-> the choosing quotient equation and the definition of a factorial - n choose 1 is n and n choose n is 1 
+				-> these can be put into their own function 
+
+-> selecting items from a multiset 
+	-> problems in which we have to choose r items from n varieties 
+	-> menu example <- there are different menu options 
+		-> we have a set of tacos 
+		-> we want to order more than 3 
+		-> every possible combination which can be ordered 
+			-> we can literally list out every combination 
+			-> or apply the equations for this order 
+			-> determining the number of different ways to order that many tacos 
+				-> delimiters 
+				-> in this example it's 45 different ones 
+				-> (r+1)n different combinations 
+		-> tacos and delimiters 
+		-> in this example, we have C(r+n−1,r)= r!(n−1)!/(r+n−1)!
+			-> two buckets and a collection of different balls
+			-> applying these equations to calculate the number of different ways to fill a bucket with balls 
+				-> then coding the response into Python
+
+-> element composition 
+	-> the relative order of some of the members in the set 
+	-> the number of ways we can order the words in "APPLE"
+		-> cardinality of 5 
+		-> the letters in this have a cardinality 
+	-> another example is a box containing a certain number of balls 
+		-> wanting the balls to appear in a certain number of ways 
+		-> depending on whether the number of balls is distinct 
+
+-> breaking a problem down into subcases 
+	-> enumerating menders of a set
+	-> arranging / selecting from a set of items 
+	-> there might be multiple different situations 
+	-> breaking down the problem into different sub-cases
+		-> the addition / multiplication principles 
+		-> with "and", "or"s
+
+	-> arrangements of four digit numbers 
+		-> powers 
+		-> the number of ways to place a letter in a string 
+		-> solving the problems by hand with the equations, then coding them into Python 
+		-> the number of ways to arrange a four letter string
+
+-> set exclusion 
+	-> calculating the number of ways not to do something 
+	-> don't calculate all of them, calculate the total number of take away the ones which are allowed 
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+		-> the total number of subclasses is the number allowed plus the number not allowed 
+		-> the number of ways we can rearrange the letters in a word 
+		-> the number of permutations <- and then dividing by the number of times one letter repeats 
+			-> taking away the number which we have from all of the ones which can be returns the number of permutations which we can't have 
+
+	-> in another question, the permutations of the different elements in a licence plate 
+		-> storing the number in that license plate 
+		-> these equations can again be written into a function
+
+-> review 
+	-> ​combinatorics 
+	-> the number of times we can combine something 
+	-> enumeration <- arranging / selecting items from a set / multiset 
+	-> add <- "or"
+	-> times <- "and"
+		-> these are the addition and multiplication principles 
+	-> order matters where there is a set of distinct elements 
+	-> permutation <- the order maters and repetition isn't allowed 
+	-> combinations <- the order doesn't matter and repetition isn't allowed 
+		-> the equations for this can also be changed so it's the total number minus the cases which aren't allowed 

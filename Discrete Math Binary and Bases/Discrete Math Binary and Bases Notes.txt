@@ -1,0 +1,88 @@
+-> number bases 
+	-> powers of 10 / base 10 
+	-> you don't have to use 10 as a base
+	-> 10 fingers 
+	-> binary (Base 2): leading 0b
+	-> octal (Base 8): leading 0o
+	-> decimal (Base 10): leading nothing (this is what we use in everyday life!)
+	-> hexadecimal (Base 16): leading 0x
+	-> there is a way of converting numbers into binary 
+	-> using a leading notation for this 
+	-> the number and the base of the position in each digit 
+		-> this can be done in binary 
+		-> breaking a number into its different components by hand, and then coding this into Python 
+	-> different bases 
+
+-> other number bases
+	-> binary <- base 2
+		-> for numbers 
+		-> this is discrete maths 
+		-> these can also be used for booleans / logical statements 
+			-> 1 <- True 
+			-> 0 <- False 
+		-> that is, the software interprets the higher signal as a “1” and the lower signal as “0”
+		-> these numbers are for the hardware of computers
+
+	-> the amount of numbers per digit 
+	-> base 4 means there are 4 digits per number 
+	-> this never shows up in a list of allowable numbers 
+	-> ASCII and Unicode 
+		-> ASCII is an older system for representing characters 
+		-> Unicode <- the international standard for characters 
+
+-> binary converts to decimal
+	-> the exponent method <- summing the products of each binary digit  
+		-> in order of how significant the digits are 
+		-> this works in terms of a summation equation 
+		-> the sum of d2^I
+		-> numbers can be converted to decimals
+
+	-> decimal to binary conversion 
+		-> division method 
+		-> dividing the decimal number by 2 repeatedly until the quotient is 0
+		-> the retainers collected at each step form the binary number when read from bottom to top 
+		-> steps to convert a number into binary 
+			-> divide the decimal number by 2 and record the remainder 
+			-> repeat this until the quotient is 0 
+			-> the binary number is read from the last number to the first
+			-> decimals can also be converted into binary 
+
+		-> evens and oddness in binary 
+			-> a binary is odd if it's right most digit is 1 and even if this is 0 
+
+		-> quinary (base 5) system 
+			-> this uses digits 0-4
+			-> the rules for determining evens / oddness are the same as in the decimal system 
+
+		-> octal (base 8) system 
+			-> octal 
+			-> this uses 0-7 and is a base 8 system 
+			-> each digit corresponds to three binary digits 
+			-> this simplifies conversions between binary and octal 
+			-> we can convert between different types of base systems with another summation equation 
+			-> the same number can have an octal, or binary representation for example
+
+		-> decimal to octal conversion 
+			-> this is similar to binary conversion, but uses division by 8
+			-> a number can be converted into octal 
+
+		-> hexadecimal 
+			-> this is a base 16 system 
+			-> each hex digit corresponds to four binary digits 
+			-> A-F
+			-> to move from binary to hex 
+			-> for representations of letters
+
+		-> converting hex to decimal 
+			-> there is another summation equation for this 
+			-> the powers of 16 to do this 
+			-> converting 0xFF to decimal 
+
+		-> decimal to hex conversion 
+			-> using the division method with base 16
+			-> converting a decimal to hex 
+			-> this also uses remainders 
+			-> binary exercises 
+				-> determining if binary numbers are even or odd, then converting binary numbers to decimal 
+				-> the different formats of number bases can be converted between 
+				-> this is important for the different contexts where we see them 
