@@ -1,7 +1,7 @@
 # Code-Academy-Python-Independent-Study
 
 ### Repository Overview
-This repository contains my notes and completed projects from various Python courses and case studies. These resources cover a wide range of topics from data visualization and machine learning to discrete math and blockchain. Each directory includes certificates, notebooks, and notes associated with the respective projects or courses.
+This repository contains my certifications, notes (txt) and Jupyter notebooks from independently completing Code Academy Python courses. This covered a wide range of topics from analysing data, to discrete mathematics and machine learning with Python. 
 
 ### Course and Project Details
 
